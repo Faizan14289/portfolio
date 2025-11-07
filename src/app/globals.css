@@ -24,3 +24,40 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Custom styles for markdown content */
+.prose h1 {
+  @apply text-4xl font-bold mb-6 text-gray-900 dark:text-white;
+}
+
+.prose h2 {
+  @apply text-2xl font-bold mb-4 text-gray-900 dark:text-white;
+}
+
+.prose h3 {
+  @apply text-xl font-bold mb-3 text-gray-900 dark:text-white;
+}
+
+.prose p {
+  @apply mb-4 text-gray-800 dark:text-gray-100 leading-relaxed;
+}
+
+.prose ul {
+  @apply list-disc list-inside mb-4 space-y-1 text-gray-800 dark:text-gray-100;
+}
+
+.prose li {
+  @apply ml-4;
+}
+
+.prose strong {
+  @apply font-bold text-gray-900 dark:text-white;
+}
+
+.prose em {
+  @apply italic text-gray-600 dark:text-gray-400;
+}
+
+.prose hr {
+  @apply my-8 border-gray-300 dark:border-gray-600;
+}

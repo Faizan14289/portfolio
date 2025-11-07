@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Faizan Ali — Portfolio
+
+Next.js portfolio showcasing case studies, services, projects, resume, and a contact page. Built with TypeScript and Tailwind, with smooth animations via Framer Motion.
+
+## Live Demo
+
+- Deployed on Vercel: `https://<your-vercel-project>.vercel.app/` (update after first deploy)
+
+## Tech Stack
+
+- Next.js 16, React 19, TypeScript
+- Tailwind CSS, Framer Motion
+- Markdown rendering for resume (`public/resume.md`)
+- Optional server email via Resend (disabled by default; current contact uses `mailto:`)
+
+## Features
+
+- Case Studies with dynamic content and site preview
+- Services page with structured offerings and tech stack
+- Projects grid with categories and live links
+- Resume viewer that loads `public/resume.md`
+- Contact form that opens the user’s email client (`mailto:`)
 
 ## Getting Started
 
-First, run the development server:
+Prerequisites:
+- Node.js `>= 18`
+
+Install and run:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000` in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `npm run dev` — start local dev server
+- `npm run build` — build for production
+- `npm start` — run production build
+- `npm run lint` — run ESLint
 
-## Learn More
+## Configuration
 
-To learn more about Next.js, take a look at the following resources:
+- No environment variables are required for the default `mailto` contact flow.
+- Optional (only if enabling server-side email): create `portfolio/.env.local` with:
+  - `RESEND_API_KEY=your_key`
+  - `CONTACT_TO_EMAIL=your_destination@example.com`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Recommended: Vercel
+- Push the repo to GitHub
+- Import the GitHub repo in Vercel (`New Project` → Next.js auto-detected)
+- Add env vars only if enabling server email
+- Deploy; future pushes create preview and production deployments automatically
 
-## Deploy on Vercel
+Note on GitHub Pages
+- GitHub Pages does not support Next.js server features (API routes, SSR). This project uses server-side logic for site previews; Vercel is the reliable choice.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Project Structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `src/app` — App Router pages
+- `src/components` — UI components
+- `src/data` — case studies and services data
+- `public` — static assets and `resume.md`
+
+## Contact
+
+- For inquiries, use the Contact page or email: `faizali2152@gmail.com`
