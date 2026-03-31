@@ -1,147 +1,178 @@
-'use client';
+"use client";
 
-import { motion, Variants } from 'framer-motion';
-import type { CaseStudy } from '@/data/caseStudies';
-import type { SitePreview } from '@/lib/sitePreview';
+import { motion } from "framer-motion";
+import type { CaseStudy } from "@/data/caseStudies";
+import type { SitePreview } from "@/lib/sitePreview";
 
-export default function CaseStudyDetailView({ cs, site }: { cs: CaseStudy; site?: SitePreview }) {
-  const container: Variants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
-  };
-  const item: Variants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { type: 'spring' as const, stiffness: 120, damping: 18 }
-    }
-  };
+const container = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.06 },
+  },
+};
 
+const item = {
+  hidden: { opacity: 0, y: 8 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] as const },
+  },
+};
+
+export default function CaseStudyDetailView({
+  cs,
+  site,
+}: {
+  cs: CaseStudy;
+  site?: SitePreview;
+}) {
   return (
     <motion.div variants={container} initial="hidden" animate="visible">
-      <motion.h1 variants={item} className="text-3xl md:text-4xl font-bold mb-4 text-gray-800 dark:text-white">
-        {cs.title}
-      </motion.h1>
-      <motion.p variants={item} className="text-gray-700 dark:text-gray-300 mb-6">
-        {cs.summary}
-      </motion.p>
+      <motion.div variants={item}>
+        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--muted)]">
+          Case study
+        </p>
+        <h1 className="font-display mt-2 text-3xl font-semibold tracking-tight text-[var(--foreground)] md:text-4xl">
+          {cs.title}
+        </h1>
+        <p className="mt-4 text-base leading-relaxed text-[var(--muted)]">{cs.summary}</p>
+      </motion.div>
 
-      {cs.context && (
-        <motion.div variants={item} className="mb-6">
-          <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">Context</h3>
-          <p className="text-gray-700 dark:text-gray-300">{cs.context}</p>
-        </motion.div>
-      )}
+      {cs.context ? (
+        <motion.section variants={item} className="mt-10 surface-card p-6 md:p-8">
+          <h2 className="font-display text-lg font-semibold text-[var(--foreground)]">
+            Context
+          </h2>
+          <p className="mt-3 text-[var(--muted)] leading-relaxed">{cs.context}</p>
+        </motion.section>
+      ) : null}
 
-      {cs.approach && (
-        <motion.div variants={item} className="mb-6">
-          <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">Approach</h3>
-          <p className="text-gray-700 dark:text-gray-300">{cs.approach}</p>
-        </motion.div>
-      )}
+      {cs.approach ? (
+        <motion.section variants={item} className="mt-6 surface-card p-6 md:p-8">
+          <h2 className="font-display text-lg font-semibold text-[var(--foreground)]">
+            Approach
+          </h2>
+          <p className="mt-3 text-[var(--muted)] leading-relaxed">{cs.approach}</p>
+        </motion.section>
+      ) : null}
 
-      <motion.div variants={item} className="flex flex-wrap gap-2 mb-6">
+      <motion.div variants={item} className="mt-6 flex flex-wrap gap-2">
         {cs.tech.map((t) => (
           <span
             key={t}
-            className="text-xs bg-blue-50 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300 px-2 py-1 rounded"
+            className="inline-flex rounded-md border border-[var(--border)] bg-[var(--surface-2)] px-2.5 py-1 font-mono text-[10px] text-[var(--foreground)]"
           >
             {t}
           </span>
         ))}
       </motion.div>
 
-      {cs.features && cs.features.length > 0 && (
-        <motion.div variants={item} className="mb-8">
-          <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">Key Features</h3>
-          <ul className="list-disc pl-5 text-gray-700 dark:text-gray-300 space-y-1">
+      {cs.features && cs.features.length > 0 ? (
+        <motion.section variants={item} className="mt-8 surface-card p-6 md:p-8">
+          <h2 className="font-display text-lg font-semibold text-[var(--foreground)]">
+            Key features
+          </h2>
+          <ul className="mt-3 list-inside list-disc space-y-1 text-[var(--muted)]">
             {cs.features.map((f) => (
               <li key={f}>{f}</li>
             ))}
           </ul>
-        </motion.div>
-      )}
+        </motion.section>
+      ) : null}
 
-      {cs.metrics && (
-        <motion.div variants={item} className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
+      {cs.metrics ? (
+        <motion.ul
+          variants={item}
+          className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3"
+        >
           {cs.metrics.map((m) => (
-            <div
-              key={m.label}
-              className="rounded-xl bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm p-4 shadow border border-white/20 text-center"
-            >
-              <div className="text-2xl font-bold text-gray-800 dark:text-white">{m.value}</div>
-              <div className="text-sm text-gray-600 dark:text-gray-300">{m.label}</div>
-            </div>
+            <li key={m.label} className="surface-card p-4 text-center">
+              <p className="font-display text-2xl font-semibold text-[var(--foreground)]">
+                {m.value}
+              </p>
+              <p className="mt-1 text-xs text-[var(--muted)]">{m.label}</p>
+            </li>
           ))}
-        </motion.div>
-      )}
+        </motion.ul>
+      ) : null}
 
-      {cs.responsibilities && cs.responsibilities.length > 0 && (
-        <motion.div variants={item} className="mb-8">
-          <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">Responsibilities</h3>
-          <ul className="list-disc pl-5 text-gray-700 dark:text-gray-300 space-y-1">
+      {cs.responsibilities && cs.responsibilities.length > 0 ? (
+        <motion.section variants={item} className="mt-8 surface-card p-6 md:p-8">
+          <h2 className="font-display text-lg font-semibold text-[var(--foreground)]">
+            Responsibilities
+          </h2>
+          <ul className="mt-3 list-inside list-disc space-y-1 text-[var(--muted)]">
             {cs.responsibilities.map((r) => (
               <li key={r}>{r}</li>
             ))}
           </ul>
-        </motion.div>
-      )}
+        </motion.section>
+      ) : null}
 
-      {cs.outcomes && cs.outcomes.length > 0 && (
-        <motion.div variants={item} className="mb-8">
-          <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">Outcomes</h3>
-          <ul className="list-disc pl-5 text-gray-700 dark:text-gray-300 space-y-1">
+      {cs.outcomes && cs.outcomes.length > 0 ? (
+        <motion.section variants={item} className="mt-6 surface-card p-6 md:p-8">
+          <h2 className="font-display text-lg font-semibold text-[var(--foreground)]">
+            Outcomes
+          </h2>
+          <ul className="mt-3 list-inside list-disc space-y-1 text-[var(--muted)]">
             {cs.outcomes.map((o) => (
               <li key={o}>{o}</li>
             ))}
           </ul>
-        </motion.div>
-      )}
+        </motion.section>
+      ) : null}
 
-      {site && (
-        <motion.div variants={item} className="rounded-2xl bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm p-6 shadow-xl border border-white/20 mb-8">
-          <div className="flex items-start gap-4">
-            {site.favicon && (
-              <img src={site.favicon} alt="Site icon" className="w-8 h-8 rounded" />
-            )}
-            <div>
-              <div className="text-lg font-semibold text-gray-800 dark:text-white">
-                {site.title || 'Site Preview'}
-              </div>
-              {site.description && (
-                <div className="text-sm text-gray-700 dark:text-gray-300 mt-1">
-                  {site.description}
-                </div>
-              )}
-              {site.headings && site.headings.length > 0 && (
-                <ul className="mt-3 text-sm text-gray-700 dark:text-gray-300 list-disc pl-5">
+      {site ? (
+        <motion.section variants={item} className="mt-8 surface-card p-6 md:p-8">
+          <h2 className="font-display text-lg font-semibold text-[var(--foreground)]">
+            Site preview
+          </h2>
+          <div className="mt-4 flex items-start gap-4">
+            {site.favicon ? (
+              <img src={site.favicon} alt="" className="mt-1 size-8 rounded" />
+            ) : null}
+            <div className="min-w-0 flex-1">
+              <p className="font-medium text-[var(--foreground)]">
+                {site.title || "Site preview"}
+              </p>
+              {site.description ? (
+                <p className="mt-1 text-sm text-[var(--muted)]">{site.description}</p>
+              ) : null}
+              {site.headings && site.headings.length > 0 ? (
+                <ul className="mt-3 list-inside list-disc text-sm text-[var(--muted)]">
                   {site.headings.map((h) => (
                     <li key={h}>{h}</li>
                   ))}
                 </ul>
-              )}
-              {site.image && (
-                <div className="mt-4">
-                  <img src={site.image} alt="Preview" className="w-full max-h-64 object-cover rounded-lg" />
+              ) : null}
+              {site.image ? (
+                <div className="mt-4 overflow-hidden rounded-lg border border-[var(--border)]">
+                  <img
+                    src={site.image}
+                    alt=""
+                    className="max-h-64 w-full object-cover"
+                  />
                 </div>
-              )}
+              ) : null}
             </div>
           </div>
-        </motion.div>
-      )}
+        </motion.section>
+      ) : null}
 
-      {cs.demo && (
-        <motion.a
-          variants={item}
-          href={cs.demo}
-          target="_blank"
-          rel="noopener"
-          className="inline-block text-blue-600 dark:text-blue-400 font-semibold hover:underline"
-        >
-          Visit Live Demo →
-        </motion.a>
-      )}
+      {cs.demo ? (
+        <motion.div variants={item} className="mt-10">
+          <a
+            href={cs.demo}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-cta inline-flex h-11 items-center px-5 text-sm"
+          >
+            Visit live demo
+          </a>
+        </motion.div>
+      ) : null}
     </motion.div>
   );
 }

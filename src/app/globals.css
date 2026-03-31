@@ -1,63 +1,273 @@
 @import "tailwindcss";
 
+/* —— Professional palette: deep navy ink, teal primary, warm coral accent —— */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #e8f4f4;
+  --foreground: #0c1929;
+  --muted: #3d5a73;
+  --muted-2: #5c7a92;
+  --surface: rgba(255, 255, 255, 0.82);
+  --surface-solid: #ffffff;
+  --surface-2: #d8f0ee;
+  --border: rgba(13, 148, 136, 0.22);
+  --border-subtle: rgba(12, 25, 41, 0.08);
+  --accent: #0d9488;
+  --accent-hover: #0f766e;
+  --accent-2: #ea580c;
+  --accent-3: #4f46e5;
+  --ring: #0d9488;
+  --on-accent: #ffffff;
+  --btn-text: #ffffff;
+  --glow: color-mix(in oklab, var(--accent) 45%, transparent);
+  --glow-2: color-mix(in oklab, var(--accent-2) 35%, transparent);
+  --grid: rgba(13, 148, 136, 0.12);
+  --mesh-1: #99f6e4;
+  --mesh-2: #fde68a;
+  --mesh-3: #c7d2fe;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #060b14;
+    --foreground: #e8f8f5;
+    --muted: #8fb8b0;
+    --muted-2: #5e8a82;
+    --surface: rgba(15, 28, 38, 0.75);
+    --surface-solid: #0f1c26;
+    --surface-2: #132a32;
+    --border: rgba(45, 212, 191, 0.28);
+    --border-subtle: rgba(232, 248, 245, 0.1);
+    --accent: #2dd4bf;
+    --accent-hover: #5eead4;
+    --accent-2: #fb923c;
+    --accent-3: #a5b4fc;
+    --ring: #2dd4bf;
+    --on-accent: #042f2e;
+    --btn-text: #ffffff;
+    --glow: color-mix(in oklab, var(--accent) 55%, transparent);
+    --glow-2: color-mix(in oklab, var(--accent-2) 45%, transparent);
+    --grid: rgba(45, 212, 191, 0.1);
+    --mesh-1: #134e4a;
+    --mesh-2: #7c2d12;
+    --mesh-3: #312e81;
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, monospace;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: "ss01" on, "cv01" on;
 }
 
-/* Custom styles for markdown content */
+.font-display {
+  font-family: var(--font-display), ui-serif, Georgia, "Times New Roman", serif;
+}
+
+/* Animated gradient wash (behind grid) */
+.shell-aurora {
+  pointer-events: none;
+  position: fixed;
+  inset: -20%;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 55% at 15% 10%, var(--mesh-1), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 85% 15%, var(--mesh-3), transparent 50%),
+    radial-gradient(ellipse 60% 45% at 70% 85%, var(--mesh-2), transparent 55%),
+    var(--background);
+  animation: aurora-drift 22s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shell-aurora {
+    animation: none;
+  }
+}
+
+@keyframes aurora-drift {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    filter: saturate(1);
+  }
+  100% {
+    transform: translate(2%, -1%) rotate(2deg) scale(1.04);
+    filter: saturate(1.15);
+  }
+}
+
+/* Grid overlay */
+.shell-grid::before {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 90% 65% at 50% -5%, black 18%, transparent 62%);
+  z-index: 0;
+  opacity: 0.85;
+}
+
+.surface-card {
+  background: var(--surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 0.875rem;
+  box-shadow:
+    0 1px 0 color-mix(in oklab, var(--foreground) 6%, transparent),
+    0 18px 40px -28px var(--glow);
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease,
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .surface-card {
+    transition: border-color 0.2s ease;
+  }
+}
+
+.surface-card:hover {
+  border-color: color-mix(in oklab, var(--accent) 45%, var(--border));
+  box-shadow:
+    0 1px 0 color-mix(in oklab, var(--accent) 15%, transparent),
+    0 24px 50px -24px var(--glow),
+    0 0 40px -20px var(--glow-2);
+  transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .surface-card:hover {
+    transform: none;
+  }
+}
+
+/* Primary CTA gradient */
+.btn-cta {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    115deg,
+    var(--accent) 0%,
+    color-mix(in oklab, var(--accent) 70%, var(--accent-3)) 45%,
+    var(--accent-2) 100%
+  );
+  color: var(--btn-text);
+  font-weight: 500;
+  border-radius: 0.5rem;
+  box-shadow:
+    0 2px 0 color-mix(in oklab, var(--foreground) 12%, transparent),
+    0 12px 28px -12px var(--glow);
+  transition:
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease;
+}
+
+.btn-cta:hover {
+  transform: translateY(-1px) scale(1.01);
+  box-shadow:
+    0 4px 0 color-mix(in oklab, var(--foreground) 10%, transparent),
+    0 20px 40px -14px var(--glow);
+}
+
+.btn-cta:active {
+  transform: translateY(0) scale(0.99);
+}
+
+.btn-cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 60%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.6s ease;
+}
+
+.btn-cta:hover::after {
+  transform: translateX(120%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-cta::after {
+    display: none;
+  }
+  .btn-cta:hover {
+    transform: none;
+  }
+}
+
+/* Gradient headline accent */
+.text-gradient {
+  background: linear-gradient(
+    120deg,
+    var(--accent) 0%,
+    var(--accent-3) 42%,
+    var(--accent-2) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Markdown / prose */
 .prose h1 {
-  @apply text-4xl font-bold mb-6 text-gray-900 dark:text-white;
+  @apply text-3xl font-semibold mb-6 text-[var(--foreground)];
+  font-family: var(--font-display), ui-serif, Georgia, serif;
 }
 
 .prose h2 {
-  @apply text-2xl font-bold mb-4 text-gray-900 dark:text-white;
+  @apply text-xl font-semibold mb-4 mt-10 text-[var(--foreground)];
+  font-family: var(--font-display), ui-serif, Georgia, serif;
 }
 
 .prose h3 {
-  @apply text-xl font-bold mb-3 text-gray-900 dark:text-white;
+  @apply text-lg font-semibold mb-3 text-[var(--foreground)];
 }
 
 .prose p {
-  @apply mb-4 text-gray-800 dark:text-gray-100 leading-relaxed;
+  @apply mb-4 text-[var(--muted)] leading-relaxed;
 }
 
 .prose ul {
-  @apply list-disc list-inside mb-4 space-y-1 text-gray-800 dark:text-gray-100;
+  @apply list-disc list-outside mb-4 space-y-1 pl-5 text-[var(--muted)];
 }
 
 .prose li {
-  @apply ml-4;
+  @apply pl-1;
 }
 
 .prose strong {
-  @apply font-bold text-gray-900 dark:text-white;
+  @apply font-semibold text-[var(--foreground)];
 }
 
 .prose em {
-  @apply italic text-gray-600 dark:text-gray-400;
+  @apply italic text-[var(--muted-2)];
 }
 
 .prose hr {
-  @apply my-8 border-gray-300 dark:border-gray-600;
+  @apply my-8 border-[var(--border)];
+}
+
+.prose a {
+  @apply text-[var(--accent)] underline-offset-4 hover:underline;
+}
+
+.prose code {
+  @apply rounded bg-[var(--surface-2)] px-1.5 py-0.5 text-sm font-mono text-[var(--foreground)];
 }

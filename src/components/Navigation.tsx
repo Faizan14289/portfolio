@@ -1,106 +1,203 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { motion } from 'framer-motion';
-import { useState } from 'react';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 const navItems = [
-  { name: 'Home', href: '/' },
-  { name: 'About', href: '/about' },
-  { name: 'Skills', href: '/skills' },
-  { name: 'Projects', href: '/projects' },
-  { name: 'Case Studies', href: '/case-studies' },
-  { name: 'Testimonials', href: '/testimonials' },
-  { name: 'Services', href: '/services' },
-  { name: 'Resume', href: '/resume' },
-  { name: 'Contact', href: '/contact' },
+  { name: "Work", href: "/projects" },
+  { name: "Case studies", href: "/case-studies" },
+  { name: "About", href: "/about" },
+  { name: "Skills", href: "/skills" },
+  { name: "Services", href: "/services" },
+  { name: "Resume", href: "/resume" },
+  { name: "Contact", href: "/contact" },
 ];
 
 export default function Navigation() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const reduce = useReducedMotion();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="flex items-center justify-between h-16">
-          <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+    <header className="fixed top-0 left-0 right-0 z-50 border-b border-[var(--border)] bg-[color-mix(in_oklab,var(--surface-solid)_76%,transparent)] backdrop-blur-xl supports-[backdrop-filter]:bg-[color-mix(in_oklab,var(--surface-solid)_62%,transparent)]">
+      <div className="mx-auto flex h-[4.25rem] max-w-6xl items-center justify-between gap-4 px-6 md:h-20">
+        <Link
+          href="/"
+          className="group flex items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]"
+        >
+          <motion.span
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface-solid)] font-mono text-[11px] font-medium text-[var(--foreground)] shadow-[0_8px_24px_-12px_var(--glow)]"
+            aria-hidden
+            whileHover={
+              reduce
+                ? undefined
+                : { rotate: [-2, 2, -1, 0], scale: 1.04 }
+            }
+            transition={{ duration: 0.45 }}
+          >
             FA
+          </motion.span>
+          <span className="hidden sm:block">
+            <span className="font-display text-base font-semibold tracking-tight text-[var(--foreground)]">
+              Faizan Ali
+            </span>
+            <span className="mt-0.5 block bg-gradient-to-r from-[var(--accent)] to-[var(--accent-2)] bg-clip-text font-mono text-[10px] uppercase tracking-[0.18em] text-transparent">
+              Full-stack engineer
+            </span>
+          </span>
+        </Link>
+
+        <nav className="hidden lg:flex lg:items-center lg:gap-0.5" aria-label="Primary">
+          {navItems.map((item) => {
+            const active = pathname === item.href;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="relative rounded-lg px-3 py-2 text-sm font-medium"
+              >
+                {active ? (
+                  <motion.span
+                    layoutId="nav-pill"
+                    className="absolute inset-0 rounded-lg border border-[var(--border)] bg-[var(--surface-2)] shadow-[0_10px_28px_-18px_var(--glow)]"
+                    style={{ zIndex: 0 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 400,
+                      damping: 34,
+                    }}
+                  />
+                ) : null}
+                <span
+                  className={`relative z-10 transition-colors ${
+                    active
+                      ? "text-[var(--foreground)]"
+                      : "text-[var(--muted)] hover:text-[var(--foreground)]"
+                  }`}
+                >
+                  {item.name}
+                </span>
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div className="flex items-center gap-3">
+          <Link
+            href="/testimonials"
+            className={`hidden md:inline-flex rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+              pathname === "/testimonials"
+                ? "border border-[var(--border)] bg-[var(--surface-2)] text-[var(--foreground)]"
+                : "text-[var(--muted)] hover:text-[var(--foreground)]"
+            }`}
+          >
+            Testimonials
           </Link>
-          {/* Mobile hamburger */}
+          <motion.div whileHover={reduce ? undefined : { y: -2 }} whileTap={reduce ? undefined : { scale: 0.97 }}>
+            <Link
+              href="/contact"
+              className="btn-cta hidden sm:inline-flex h-9 items-center px-4 text-sm"
+            >
+              Let&apos;s talk
+            </Link>
+          </motion.div>
           <button
             type="button"
-            aria-label="Toggle navigation menu"
+            aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
+            aria-controls="mobile-nav"
             onClick={() => setOpen((v) => !v)}
-            className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface-solid)] text-[var(--foreground)] shadow-[0_8px_24px_-14px_var(--glow)] lg:hidden"
           >
-            <span className="sr-only">Open main menu</span>
-            {/* Simple hamburger icon */}
-            <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="3" y1="6" x2="21" y2="6" />
-              <line x1="3" y1="12" x2="21" y2="12" />
-              <line x1="3" y1="18" x2="21" y2="18" />
+            <span className="sr-only">Menu</span>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              aria-hidden
+            >
+              {open ? (
+                <path d="M18 6L6 18M6 6l12 12" />
+              ) : (
+                <>
+                  <line x1="4" y1="8" x2="20" y2="8" />
+                  <line x1="4" y1="16" x2="20" y2="16" />
+                </>
+              )}
             </svg>
           </button>
-
-          {/* Desktop nav */}
-          <div className="hidden md:flex space-x-8">
-            {navItems.map((item) => (
-              <Link key={item.name} href={item.href} className="relative">
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className={`px-3 py-2 text-sm font-medium transition-colors ${
-                    pathname === item.href
-                      ? 'text-blue-600 dark:text-blue-400'
-                      : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
-                  }`}
-                >
-                  {item.name}
-                  {pathname === item.href && (
-                    <motion.div
-                      layoutId="navbar-indicator"
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 dark:bg-blue-400"
-                      initial={false}
-                      transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-                    />
-                  )}
-                </motion.div>
-              </Link>
-            ))}
-          </div>
         </div>
       </div>
-      {/* Mobile menu panel */}
-      {open && (
-        <motion.div
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -8 }}
-          className="md:hidden fixed top-16 left-0 right-0 z-40 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm"
-        >
-          <div className="max-w-6xl mx-auto px-6 py-3">
-            <div className="flex flex-col">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`px-3 py-2 text-base font-medium rounded-md ${
-                    pathname === item.href
-                      ? 'text-blue-600 dark:text-blue-400'
-                      : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
-                  }`}
-                  onClick={() => setOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-      )}
-    </nav>
+
+      <AnimatePresence>
+        {open ? (
+          <motion.div
+            id="mobile-nav"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden border-t border-[var(--border)] bg-[color-mix(in_oklab,var(--surface-solid)_94%,transparent)] backdrop-blur-xl lg:hidden"
+          >
+            <nav className="mx-auto max-w-6xl px-6 py-4" aria-label="Mobile primary">
+              <ul className="flex flex-col gap-1">
+                <li>
+                  <Link
+                    href="/"
+                    onClick={() => setOpen(false)}
+                    className={`block rounded-lg px-3 py-2.5 text-sm font-medium ${
+                      pathname === "/"
+                        ? "border border-[var(--border)] bg-[var(--surface-2)] text-[var(--foreground)]"
+                        : "text-[var(--muted)]"
+                    }`}
+                  >
+                    Home
+                  </Link>
+                </li>
+                {navItems.map((item, i) => (
+                  <motion.li
+                    key={item.href}
+                    initial={reduce ? undefined : { opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: reduce ? 0 : 0.04 + i * 0.03 }}
+                  >
+                    <Link
+                      href={item.href}
+                      onClick={() => setOpen(false)}
+                      className={`block rounded-lg px-3 py-2.5 text-sm font-medium ${
+                        pathname === item.href
+                          ? "border border-[var(--border)] bg-[var(--surface-2)] text-[var(--foreground)]"
+                          : "text-[var(--muted)]"
+                      }`}
+                    >
+                      {item.name}
+                    </Link>
+                  </motion.li>
+                ))}
+                <li>
+                  <Link
+                    href="/testimonials"
+                    onClick={() => setOpen(false)}
+                    className={`block rounded-lg px-3 py-2.5 text-sm font-medium ${
+                      pathname === "/testimonials"
+                        ? "border border-[var(--border)] bg-[var(--surface-2)] text-[var(--foreground)]"
+                        : "text-[var(--muted)]"
+                    }`}
+                  >
+                    Testimonials
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+    </header>
   );
 }

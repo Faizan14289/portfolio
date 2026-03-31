@@ -1,209 +1,318 @@
-'use client';
+"use client";
 
-import { motion, Variants } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
+
+const expertise = [
+  "Laravel & PHP",
+  "TypeScript",
+  "React / Next.js",
+  "API design",
+  "MySQL & scaling",
+  "Redis & caching",
+  "Docker",
+  "Realtime systems",
+];
+
+const highlights = [
+  {
+    stat: "5+",
+    label: "Years shipping production software",
+  },
+  {
+    stat: "15+",
+    label: "Products & platforms delivered",
+  },
+  {
+    stat: "SaaS",
+    label: "Enterprise workforce & commerce",
+  },
+];
+
+const featured = [
+  {
+    title: "StaffViz",
+    kind: "SaaS · Workforce intelligence",
+    href: "https://www.staffviz.com/",
+    blurb:
+      "End-to-end platform for recruitment, scheduling, tasks, and analytics with realtime updates.",
+  },
+  {
+    title: "MyTailorStore",
+    kind: "E‑commerce · Custom tailoring",
+    href: "https://www.mytailorstore.com/",
+    blurb:
+      "High-conversion bespoke fashion storefront with configurable garments and fabric catalog.",
+  },
+  {
+    title: "StreamlineMyREI",
+    kind: "PropTech · Operations",
+    href: "https://streamlinerei.com/",
+    blurb:
+      "Marketing, lead flow, and virtual operations automation for US real estate teams.",
+  },
+];
+
+const stagger = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.09, delayChildren: 0.06 },
+  },
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] as const },
+  },
+};
 
 export default function Home() {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants: Variants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        // Use spring to satisfy Framer Motion's Transition typing
-        type: 'spring' as const,
-        stiffness: 120,
-        damping: 18
-      }
-    }
-  };
+  const reduce = useReducedMotion();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <div className="container mx-auto px-6 py-20">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="max-w-6xl mx-auto text-center"
-        >
-          {/* Hero Section */}
-          <motion.div variants={itemVariants} className="mb-16">
-            <motion.h1 
-              className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent"
-              initial={{ scale: 0.5, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.8, type: "spring" }}
+    <div className="relative">
+      {/* Floating orbs — decorative */}
+      <div
+        className="pointer-events-none fixed -left-32 top-1/4 h-72 w-72 rounded-full bg-[color-mix(in_oklab,var(--accent)_32%,transparent)] blur-3xl md:h-96 md:w-96"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none fixed -right-20 bottom-1/4 h-64 w-64 rounded-full bg-[color-mix(in_oklab,var(--accent-2)_28%,transparent)] blur-3xl"
+        aria-hidden
+      />
+
+      <section className="relative mx-auto max-w-6xl px-6 pb-16 pt-10 md:pb-24 md:pt-14">
+        <div className="grid gap-12 lg:grid-cols-12 lg:items-start lg:gap-10">
+          <motion.div
+            className="lg:col-span-7"
+            variants={stagger}
+            initial="hidden"
+            animate="visible"
+          >
+            <motion.p
+              variants={fadeUp}
+              className="font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--accent)]"
             >
-              Faizan Ali
-            </motion.h1>
-            
-            <motion.h2 
-              className="text-2xl md:text-3xl font-semibold mb-4 text-gray-700 dark:text-gray-300"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-            >
-              Sr. Full Stack Software Engineer (5+ years)
-            </motion.h2>
-            
-            <motion.p 
-              className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-8"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-            >
-              Studied BS Computer Science at the University of Engineering and Technology (UET) Lahore. 
-              5 years of full‑stack experience with PHP/Laravel, TypeScript, and mid‑level Node.js.
+              Available for senior full-stack roles
             </motion.p>
-
-            {/* CTA Buttons */}
-            <motion.div 
-              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.6, duration: 0.6 }}
+            <motion.h1
+              variants={fadeUp}
+              className="font-display mt-5 text-4xl font-semibold leading-[1.08] tracking-tight text-[var(--foreground)] md:text-5xl lg:text-[3.25rem]"
             >
-              <Link href="/about">
-                <motion.button
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition-shadow"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+              I build dependable backends and interfaces that{" "}
+              <span className="text-gradient">scale with the business.</span>
+            </motion.h1>
+            <motion.p
+              variants={fadeUp}
+              className="mt-6 max-w-xl text-base leading-relaxed text-[var(--muted)] md:text-lg"
+            >
+              Sr. full-stack engineer with deep Laravel and TypeScript experience across
+              SaaS, e‑commerce, and internal tooling—focused on clarity, performance, and
+              maintainable delivery.
+            </motion.p>
+            <motion.div variants={fadeUp} className="mt-8 flex flex-wrap gap-3">
+              <motion.div whileHover={reduce ? undefined : { y: -3 }} whileTap={reduce ? undefined : { scale: 0.98 }}>
+                <Link href="/projects" className="btn-cta inline-flex h-11 items-center px-5 text-sm">
+                  View selected work
+                </Link>
+              </motion.div>
+              <motion.div whileHover={reduce ? undefined : { y: -2 }} whileTap={reduce ? undefined : { scale: 0.98 }}>
+                <Link
+                  href="/resume"
+                  className="inline-flex h-11 items-center rounded-lg border border-[var(--border)] bg-[var(--surface-solid)] px-5 text-sm font-medium text-[var(--foreground)] shadow-[0_12px_32px_-20px_var(--glow)] transition-colors hover:border-[var(--accent)]"
                 >
-                  Learn More About Me
-                </motion.button>
-              </Link>
-              
-              <Link href="/contact">
-                <motion.button
-                  className="border-2 border-blue-600 text-blue-600 dark:text-blue-400 px-8 py-3 rounded-full font-semibold hover:bg-blue-600 hover:text-white transition-colors"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Get In Touch
-                </motion.button>
-              </Link>
+                  Download resume
+                </Link>
+              </motion.div>
             </motion.div>
-          </motion.div>
-
-          {/* Skills Preview */}
-          <motion.div variants={itemVariants} className="mb-16">
-            <h3 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Core Skills</h3>
-            <div className="flex flex-wrap justify-center gap-3">
-              {['React', 'Next.js', 'TypeScript', 'Node.js (Mid)', 'PHP', 'Laravel', 'MySQL', 'Redis'].map((skill, index) => (
-                <motion.span
-                  key={skill}
-                  className="bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 text-blue-800 dark:text-blue-300 px-4 py-2 rounded-full text-sm font-medium"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.8 + index * 0.1 }}
-                  whileHover={{ 
-                scale: 1.1,
-                transition: { duration: 0.3 }
-              }}
-                >
-                  {skill}
-                </motion.span>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Quick Stats */}
-          <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            {[
-              { number: "5+", label: "Years Full Stack" },
-              { number: "15+", label: "Projects Built" },
-              { number: "2.89", label: "Current GPA" }
-            ].map((stat, index) => (
+            <motion.dl
+              variants={fadeUp}
+              className="mt-12 grid gap-6 sm:grid-cols-3"
+            >
+              {highlights.map((h, i) => (
                 <motion.div
-                  key={stat.label}
-                  className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1 + index * 0.1 }}
+                  key={h.label}
+                  initial={reduce ? undefined : { opacity: 0, y: 12 }}
+                  whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ delay: 0.1 + i * 0.08, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                  className="relative overflow-hidden rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-solid)]/60 px-4 py-4 backdrop-blur-sm"
                 >
-                  <div className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
-                    {stat.number}
-                  </div>
-                  <div className="text-gray-600 dark:text-gray-400 font-medium">{stat.label}</div>
-                </motion.div>
-            ))}
-          </motion.div>
-
-          {/* Recent Projects Preview */}
-          <motion.div variants={itemVariants} className="mt-16">
-            <h3 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Featured Projects</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-              {[
-                { title: "E-Commerce Platform", tech: "React, Node.js" },
-                { title: "Task Management App", tech: "Next.js, MongoDB" },
-                { title: "Weather Dashboard", tech: "TypeScript, API" }
-              ].map((project, index) => (
-                <motion.div
-                  key={project.title}
-                  className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-white/30 text-left"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.4 + index * 0.1 }}
-                  whileHover={{ 
-                    y: -5,
-                    scale: 1.02,
-                    transition: { type: "spring", stiffness: 300 }
-                  }}
-                >
-                  <h4 className="text-lg font-semibold mb-2 text-gray-800 dark:text-white">{project.title}</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">{project.tech}</p>
-                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                    <motion.div 
-                      className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full"
-                      initial={{ width: 0 }}
-                      animate={{ width: `${80 + index * 10}%` }}
-                      transition={{ delay: 1.6 + index * 0.1, duration: 0.8 }}
-                    />
-                  </div>
+                  <span
+                    className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-[var(--accent)] via-[var(--accent-3)] to-[var(--accent-2)]"
+                    aria-hidden
+                  />
+                  <dt className="font-display text-2xl font-semibold text-[var(--foreground)]">
+                    {h.stat}
+                  </dt>
+                  <dd className="mt-1 text-sm leading-snug text-[var(--muted)]">
+                    {h.label}
+                  </dd>
                 </motion.div>
               ))}
+            </motion.dl>
+          </motion.div>
+
+          <motion.aside
+            className="lg:col-span-5"
+            initial={reduce ? undefined : { opacity: 0, y: 20, rotateX: 4 }}
+            animate={{ opacity: 1, y: 0, rotateX: 0 }}
+            transition={{ duration: 0.55, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+            style={{ perspective: 1200 }}
+          >
+            <div className="surface-card relative overflow-hidden p-6 md:p-8">
+              <div
+                className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-[color-mix(in_oklab,var(--accent)_25%,transparent)] blur-2xl"
+                aria-hidden
+              />
+              <p className="relative font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--accent)]">
+                Core expertise
+              </p>
+              <ul className="relative mt-5 flex flex-wrap gap-2">
+                {expertise.map((item, i) => (
+                  <motion.li
+                    key={item}
+                    initial={reduce ? undefined : { opacity: 0, scale: 0.92 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{
+                      delay: 0.25 + i * 0.04,
+                      type: "spring",
+                      stiffness: 380,
+                      damping: 22,
+                    }}
+                    whileHover={reduce ? undefined : { scale: 1.05, y: -2 }}
+                  >
+                    <span className="inline-flex items-center rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-2.5 py-1 font-mono text-[11px] text-[var(--foreground)] shadow-inner">
+                      {item}
+                    </span>
+                  </motion.li>
+                ))}
+              </ul>
+              <p className="relative mt-8 text-sm leading-relaxed text-[var(--muted)]">
+                Recent focus: Laravel Octane microservices, Redis-backed caching, Socket.io
+                collaboration features, and disciplined testing within established SOPs.
+              </p>
+              <Link
+                href="/case-studies"
+                className="relative mt-6 inline-flex text-sm font-semibold text-[var(--accent)] underline decoration-2 underline-offset-4 transition-colors hover:text-[var(--accent-2)]"
+              >
+                Read case studies →
+              </Link>
             </div>
-            
+          </motion.aside>
+        </div>
+      </section>
+
+      <section className="relative border-t border-[var(--border)] bg-[color-mix(in_oklab,var(--surface-solid)_55%,transparent)] backdrop-blur-md">
+        <div className="mx-auto max-w-6xl px-6 py-16 md:py-20">
+          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.8 }}
-              className="mt-8"
+              initial={reduce ? undefined : { opacity: 0, x: -12 }}
+              whileInView={reduce ? undefined : { opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45 }}
             >
-              <Link href="/projects">
-                <motion.button
-                  className="text-blue-600 dark:text-blue-400 font-semibold hover:underline"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  View All Projects →
-                </motion.button>
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--accent)]">
+                Selected clients & products
+              </p>
+              <h2 className="font-display mt-3 text-2xl font-semibold text-[var(--foreground)] md:text-3xl">
+                Platforms in production
+              </h2>
+            </motion.div>
+            <motion.div
+              initial={reduce ? undefined : { opacity: 0, x: 12 }}
+              whileInView={reduce ? undefined : { opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45 }}
+            >
+              <Link
+                href="/projects"
+                className="text-sm font-semibold text-[var(--accent)] underline-offset-4 hover:underline"
+              >
+                Full project index
               </Link>
             </motion.div>
+          </div>
+          <ul className="mt-10 grid gap-4 md:grid-cols-3">
+            {featured.map((f, i) => (
+              <motion.li
+                key={f.title}
+                initial={reduce ? undefined : { opacity: 0, y: 24 }}
+                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-30px" }}
+                transition={{
+                  duration: 0.5,
+                  delay: i * 0.1,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+              >
+                <motion.a
+                  href={f.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group surface-card relative flex h-full flex-col overflow-hidden p-6"
+                  whileHover={reduce ? undefined : { scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 260, damping: 22 }}
+                >
+                  <span
+                    className="absolute inset-0 bg-gradient-to-br from-[color-mix(in_oklab,var(--accent)_12%,transparent)] via-transparent to-[color-mix(in_oklab,var(--accent-2)_10%,transparent)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                    aria-hidden
+                  />
+                  <span className="relative font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--muted)]">
+                    {f.kind}
+                  </span>
+                  <span className="relative font-display mt-3 text-lg font-semibold text-[var(--foreground)] transition-colors group-hover:text-[var(--accent)]">
+                    {f.title}
+                  </span>
+                  <p className="relative mt-2 flex-1 text-sm leading-relaxed text-[var(--muted)]">
+                    {f.blurb}
+                  </p>
+                  <span className="relative mt-4 inline-flex items-center gap-1 font-mono text-[11px] font-medium text-[var(--accent-2)] transition-transform duration-300 group-hover:translate-x-1">
+                    Visit live →
+                  </span>
+                </motion.a>
+              </motion.li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="relative mx-auto max-w-6xl px-6 py-16 md:py-20">
+        <motion.div
+          className="surface-card relative overflow-hidden p-8 md:flex md:items-center md:justify-between md:p-10"
+          initial={reduce ? undefined : { opacity: 0, scale: 0.98 }}
+          whileInView={reduce ? undefined : { opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[color-mix(in_oklab,var(--accent)_15%,transparent)] via-transparent to-[color-mix(in_oklab,var(--accent-3)_12%,transparent)]"
+            aria-hidden
+          />
+          <div className="relative max-w-2xl">
+            <h2 className="font-display text-xl font-semibold text-[var(--foreground)] md:text-2xl">
+              Planning a rebuild, a new product line, or a performance push?
+            </h2>
+            <p className="mt-3 text-[var(--muted)]">
+              I work best with teams that value pragmatic architecture, written specs, and
+              incremental delivery.
+            </p>
+          </div>
+          <motion.div
+            className="relative mt-6 shrink-0 md:mt-0"
+            whileHover={reduce ? undefined : { scale: 1.04 }}
+            whileTap={reduce ? undefined : { scale: 0.98 }}
+          >
+            <Link href="/contact" className="btn-cta inline-flex h-11 items-center px-5 text-sm">
+              Start a conversation
+            </Link>
           </motion.div>
         </motion.div>
-      </div>
+      </section>
     </div>
   );
 }

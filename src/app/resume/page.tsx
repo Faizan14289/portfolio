@@ -1,13 +1,16 @@
-import Resume from '@/components/Resume';
+import type { Metadata } from "next";
+import Resume from "@/components/Resume";
+import { getSiteUrl, site } from "@/lib/site";
 
-export const metadata = {
-  title: 'Resume | Faizan Ali',
-  description: 'Professional resume and CV preview for Faizan Ali.',
+export const metadata: Metadata = {
+  title: "Résumé",
+  description: `${site.name} — ${site.jobTitle}. CV preview and PDF download.`,
   openGraph: {
-    title: 'Resume | Faizan Ali',
-    description: 'Professional resume and CV preview for Faizan Ali.',
-    type: 'profile'
-  }
+    title: `Résumé | ${site.name}`,
+    description: `Professional resume and CV for ${site.name}.`,
+    type: "profile",
+    url: `${getSiteUrl().replace(/\/$/, "")}/resume`,
+  },
 };
 
 export default function ResumePage() {
