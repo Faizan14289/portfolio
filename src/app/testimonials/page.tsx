@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import PageHeader from "@/components/PageHeader";
+import PageShell from "@/components/editorial/PageShell";
 import { testimonials } from "@/data/testimonials";
 
 const container = {
@@ -24,28 +25,28 @@ const item = {
 
 export default function TestimonialsPage() {
   return (
-    <div className="mx-auto max-w-6xl px-6 py-12 md:py-16">
+    <PageShell>
       <PageHeader
         eyebrow="Social proof"
         title="Testimonials"
-        description="Notes from people I’ve shipped alongside—edited lightly for clarity where helpful."
+        description="What clients and teammates say about working together—edited lightly for clarity where helpful."
       />
 
       <motion.ul
         variants={container}
         initial="hidden"
         animate="visible"
-        className="grid gap-4 md:grid-cols-2"
+        className="grid gap-5 md:grid-cols-2"
       >
         {testimonials.map((t) => (
           <motion.li key={t.id} variants={item}>
-            <blockquote className="surface-card h-full p-6 md:p-8">
-              <p className="font-display text-lg leading-snug text-[var(--foreground)]">
+            <blockquote className="surface-dark h-full p-8 md:p-10">
+              <p className="font-hero text-xl font-normal leading-snug text-[#FAFAF9]">
                 “{t.quote}”
               </p>
-              <footer className="mt-5 border-t border-[var(--border-subtle)] pt-4 text-sm text-[var(--muted)]">
-                <span className="font-medium text-[var(--foreground)]">{t.name}</span>
-                <span className="text-[var(--muted-2)]"> · </span>
+              <footer className="mt-8 border-t border-[#FAFAF9]/10 pt-6 text-sm text-[#9A8B70]">
+                <span className="font-medium text-[#D4C8B0]">{t.name}</span>
+                <span className="text-[#7A6D58]"> · </span>
                 <span>
                   {t.role}, {t.company}
                 </span>
@@ -55,14 +56,14 @@ export default function TestimonialsPage() {
         ))}
       </motion.ul>
 
-      <div className="mt-12 text-center">
+      <div className="mt-16 text-center">
         <Link
           href="/contact"
-          className="inline-flex h-11 items-center rounded-md border border-[var(--border)] bg-[var(--surface)] px-6 text-sm font-medium text-[var(--foreground)] transition-colors hover:border-[var(--foreground)]"
+          className="inline-flex h-11 items-center border border-[#FAFAF9]/15 bg-[#FAFAF9] px-8 text-sm font-medium text-[var(--void)] transition-colors hover:border-[#A0843D] hover:text-[#A0843D]"
         >
           Work with me
         </Link>
       </div>
-    </div>
+    </PageShell>
   );
 }

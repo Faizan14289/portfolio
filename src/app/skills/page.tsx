@@ -2,12 +2,9 @@
 
 import { motion } from "framer-motion";
 import PageHeader from "@/components/PageHeader";
+import PageShell from "@/components/editorial/PageShell";
 
-type Skill = {
-  name: string;
-  level: number;
-  category: string;
-};
+type Skill = { name: string; level: number; category: string };
 
 const skills: Skill[] = [
   { name: "JavaScript", level: 90, category: "Frontend" },
@@ -34,44 +31,42 @@ const categories = [
 
 export default function SkillsPage() {
   return (
-    <div className="mx-auto max-w-6xl px-6 py-12 md:py-16">
+    <PageShell>
       <PageHeader
         eyebrow="Capability map"
         title="Skills"
-        description="A structured view of tools I use regularly—not vanity percentages, but honest relative depth for UI, services, and infrastructure work."
+        description="Relative depth across stacks I use in production—not vanity percentages, but honest signal for hiring managers."
       />
 
-      <div className="space-y-12">
+      <div className="space-y-14">
         {categories.map((category) => {
           const list = skills.filter((s) => s.category === category);
           if (list.length === 0) return null;
           return (
             <section key={category}>
-              <h2 className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--muted)]">
+              <h2 className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#A0843D]">
                 {category}
               </h2>
-              <ul className="mt-4 grid gap-4 md:grid-cols-2">
+              <ul className="mt-5 grid gap-4 md:grid-cols-2">
                 {list.map((skill, index) => (
                   <li key={skill.name} className="surface-card p-5">
                     <div className="flex items-baseline justify-between gap-4">
-                      <span className="font-medium text-[var(--foreground)]">
-                        {skill.name}
-                      </span>
-                      <span className="font-mono text-[11px] text-[var(--muted)]">
+                      <span className="font-medium text-[var(--void)]">{skill.name}</span>
+                      <span className="font-mono text-[10px] text-[var(--muted)]">
                         {skill.level}%
                       </span>
                     </div>
                     <div
-                      className="mt-3 h-1.5 overflow-hidden rounded-full bg-[var(--surface-2)]"
+                      className="mt-3 h-1 overflow-hidden rounded-full bg-black/5"
                       role="presentation"
                     >
                       <motion.div
-                        className="h-full rounded-full bg-[var(--accent)]"
+                        className="h-full rounded-full bg-[#A0843D]"
                         initial={{ width: 0 }}
                         animate={{ width: `${skill.level}%` }}
                         transition={{
                           duration: 0.9,
-                          delay: index * 0.04,
+                          delay: index * 0.03,
                           ease: [0.22, 1, 0.36, 1],
                         }}
                       />
@@ -84,16 +79,16 @@ export default function SkillsPage() {
         })}
       </div>
 
-      <section className="mt-16 surface-card p-6 md:p-8">
-        <h2 className="font-display text-xl font-semibold text-[var(--foreground)]">
-          How I think about depth
+      <section className="surface-dark mt-16 p-8 md:p-10">
+        <h2 className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#C9A84C]">
+          How to read this
         </h2>
-        <p className="mt-3 max-w-3xl text-[var(--muted)] leading-relaxed">
-          Percentages summarize breadth versus specialist depth. Production work is
-          rarely single-axis: integration, observability, and code review habits often
-          matter more than raw syntax familiarity.
+        <p className="mt-4 max-w-3xl text-sm leading-relaxed text-[#B8A88A]">
+          Percentages summarize breadth versus depth. Production work is rarely single-axis:
+          integration, observability, and review habits often matter as much as syntax
+          familiarity.
         </p>
       </section>
-    </div>
+    </PageShell>
   );
 }

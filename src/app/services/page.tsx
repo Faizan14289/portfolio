@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import PageHeader from "@/components/PageHeader";
+import PageShell from "@/components/editorial/PageShell";
 import { services } from "@/data/services";
 
 const container = {
@@ -24,30 +25,26 @@ const item = {
 
 export default function ServicesPage() {
   return (
-    <div className="mx-auto max-w-6xl px-6 py-12 md:py-16">
+    <PageShell>
       <PageHeader
         eyebrow="Engagements"
         title="Services"
-        description="Where I can add the most leverage: backend APIs, commerce systems, performance work, DevOps hygiene, and automation for real-estate operations."
+        description="Backend APIs, e‑commerce, performance, DevOps, and automation—scoped honestly to what I can own end-to-end."
       />
 
       <motion.div
         variants={container}
         initial="hidden"
         animate="visible"
-        className="grid gap-4 md:grid-cols-2 lg:grid-cols-3"
+        className="grid gap-5 md:grid-cols-2 lg:grid-cols-3"
       >
         {services.map((svc) => (
-          <motion.article
-            key={svc.slug}
-            variants={item}
-            className="surface-card flex flex-col p-6"
-          >
+          <motion.article key={svc.slug} variants={item} className="surface-card flex flex-col p-7">
             <div className="flex items-start gap-3">
-              <span className="font-mono text-xl text-[var(--accent)]" aria-hidden>
+              <span className="text-xl text-[#A0843D]" aria-hidden>
                 {svc.icon}
               </span>
-              <h2 className="font-display text-lg font-semibold text-[var(--foreground)]">
+              <h2 className="font-hero text-lg font-normal uppercase leading-snug text-[var(--void)]">
                 {svc.title}
               </h2>
             </div>
@@ -61,7 +58,7 @@ export default function ServicesPage() {
               <ul className="mt-4 flex flex-wrap gap-2">
                 {svc.tech.map((t) => (
                   <li key={t}>
-                    <span className="inline-flex rounded border border-[var(--border-subtle)] px-2 py-0.5 font-mono text-[10px] text-[var(--muted)]">
+                    <span className="inline-flex rounded border border-[#FAFAF9]/6 px-2 py-0.5 font-mono text-[9px] text-[var(--muted)]">
                       {t}
                     </span>
                   </li>
@@ -72,20 +69,20 @@ export default function ServicesPage() {
         ))}
       </motion.div>
 
-      <div className="mt-14 surface-card p-8 text-center md:p-10">
-        <p className="font-display text-xl font-semibold text-[var(--foreground)]">
-          Prefer a short scoping call first?
+      <div className="surface-dark mt-16 p-10 text-center md:p-14">
+        <p className="font-hero text-2xl font-normal uppercase tracking-tight text-[#FAFAF9]">
+          Short scoping call first?
         </p>
-        <p className="mx-auto mt-2 max-w-xl text-sm text-[var(--muted)]">
-          Share the problem statement and constraints—I’ll tell you honestly if I’m the right fit.
+        <p className="mx-auto mt-3 max-w-lg text-sm text-[#B8A88A]">
+          Share the problem—I’ll say if I’m the right fit.
         </p>
         <Link
           href="/contact"
-          className="btn-cta mt-6 inline-flex h-11 items-center px-6 text-sm"
+          className="btn-cta mt-8 inline-flex h-11 items-center px-8 text-sm"
         >
           Contact
         </Link>
       </div>
-    </div>
+    </PageShell>
   );
 }

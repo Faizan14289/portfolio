@@ -1,0 +1,43 @@
+{
+  "model": {
+    "provider": "ollama",
+    "modelName": "minimax-m2.5:cloud",
+    "temperature": 0,
+    "maxRetries": 3,
+    "baseUrl": "http://localhost:11434"
+  },
+  "riskTolerance": "medium",
+  "humanInTheLoop": {
+    "enabled": false,
+    "tools": {
+      "execute": {
+        "allowedDecisions": [
+          "approve",
+          "edit",
+          "reject"
+        ]
+      },
+      "delete_file": {
+        "allowedDecisions": [
+          "approve",
+          "reject"
+        ]
+      }
+    },
+    "allowedCommands": [
+      "npm install",
+      "npm run",
+      "npx tsc",
+      "npx tsx",
+      "mkdir",
+      "node ",
+      "dir ",
+      "ls "
+    ]
+  },
+  "whatsapp": {
+    "enabled": false,
+    "mode": "admin"
+  },
+  "hooks": {}
+}

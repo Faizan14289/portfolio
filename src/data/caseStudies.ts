@@ -16,6 +16,51 @@ export type CaseStudy = {
 
 export const caseStudies: CaseStudy[] = [
   {
+    slug: 'botsify',
+    title: 'Botsify — Agentic AI Platform',
+    summary:
+      'Built the entire agentic AI layer for a no-code chatbot platform — multi-LLM orchestration, real-time voice AI, RAG pipelines, and MCP integrations.',
+    tech: ['Vue 3', 'TypeScript', 'Pinia', 'Node.js', 'Laravel', 'OpenAI', 'Deepgram', 'Twilio', 'Cloudflare Vectorize', 'Fly.io'],
+    role: 'Senior Full Stack AI Developer',
+    timeframe: '2026–Present',
+    metrics: [
+      { label: 'Voice Latency', value: '<1s' },
+      { label: 'LLM Providers', value: '6+' }
+    ],
+    demo: 'https://botsify.com/',
+    context:
+      'Botsify needed a complete agentic AI overhaul — moving from rule-based chatbots to LLM-powered agents with real-time voice, document RAG, and dynamic tool use via MCP.',
+    approach:
+      'Architected a unified LLMService abstraction supporting 6+ providers, built real-time voice pipelines with Twilio and Deepgram, implemented RAG with Cloudflare Vectorize, and designed an MCP layer for live agent tool connections.',
+    features: [
+      'Multi-LLM provider engine with dynamic switching',
+      'Real-time voice AI calls with interrupt handling',
+      'MCP integration for agent tool connections',
+      'RAG pipeline with Cloudflare Vectorize',
+      'Vue 3 AI management dashboard (20+ views)',
+      'AI Skills marketplace with Fly.io isolation',
+      'Guardrails system for output compliance',
+      'Whitelabel enterprise platform',
+    ],
+    responsibilities: [
+      'Architect multi-LLM provider engine with unified abstraction',
+      'Build real-time voice AI with Twilio, Deepgram, and OpenAI',
+      'Design MCP integration layer for live tool connections',
+      'Implement RAG with Cloudflare Vectorize',
+      'Build Vue 3 + TypeScript + Pinia AI dashboard',
+      'Develop AI Skills marketplace on Fly.io',
+      'Extend Laravel backend with agentic AI layer',
+      'Build whitelabel enterprise platform',
+    ],
+    outcomes: [
+      'Sub-1-second voice AI latency',
+      '6+ LLM providers supported dynamically',
+      'Full MCP tool ecosystem for agents',
+      'Document-grounded responses via RAG',
+      'Enterprise-ready whitelabel deployments',
+    ]
+  },
+  {
     slug: 'staffviz',
     title: 'StaffViz — Workforce Management SaaS',
     summary:

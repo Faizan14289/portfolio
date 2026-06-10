@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, IBM_Plex_Sans, Newsreader } from "next/font/google";
+import { Bebas_Neue, IBM_Plex_Mono, IBM_Plex_Sans, Newsreader } from "next/font/google";
 import "./globals.css";
-import Navigation from "@/components/Navigation";
+import AppChrome from "@/components/AppChrome";
 import SiteFooter from "@/components/SiteFooter";
 import JsonLd from "@/components/JsonLd";
-import OpenToWorkBanner from "@/components/OpenToWorkBanner";
+import GrainOverlay from "@/components/GrainOverlay";
+import CursorGlow from "@/components/CursorGlow";
 import { getMetadataBase, getSiteUrl, site } from "@/lib/site";
 
 const newsreader = Newsreader({
@@ -23,6 +24,12 @@ const plexMono = IBM_Plex_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
   weight: ["400", "500"],
+});
+
+const bebasNeue = Bebas_Neue({
+  variable: "--font-hero",
+  subsets: ["latin"],
+  weight: ["400"],
 });
 
 const siteUrl = getSiteUrl();
@@ -73,20 +80,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${newsreader.variable} ${plexSans.variable} ${plexMono.variable}`}
+      className={`${newsreader.variable} ${plexSans.variable} ${plexMono.variable} ${bebasNeue.variable}`}
     >
-      <body className="relative min-h-screen antialiased flex flex-col overflow-x-hidden">
+      <body className="relative min-h-screen bg-[#0D0D0D] text-[#FAFAF9] antialiased flex flex-col overflow-x-hidden">
         <JsonLd />
-        <div className="shell-aurora" aria-hidden />
-        <div className="shell-grid" aria-hidden />
-        <Navigation />
-        <main
-          id="main-content"
-          className="relative z-10 flex-1 pt-[4.25rem] md:pt-20"
-        >
-          <OpenToWorkBanner />
-          {children}
-        </main>
+        <GrainOverlay />
+        <CursorGlow />
+        <AppChrome>{children}</AppChrome>
         <SiteFooter />
       </body>
     </html>

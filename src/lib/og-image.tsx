@@ -58,7 +58,7 @@ export function createOgImageResponse() {
             style={{
               fontSize: 30,
               fontWeight: 500,
-              color: "#5eead4",
+              color: "#D4B86A",
               maxWidth: 900,
               lineHeight: 1.25,
             }}

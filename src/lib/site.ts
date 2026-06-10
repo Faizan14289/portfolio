@@ -2,21 +2,21 @@
 
 export const site = {
   name: "Faizan Ali",
-  jobTitle: "Senior Full-Stack Software Engineer",
-  headline: "Laravel · TypeScript · scalable APIs & realtime product",
+  jobTitle: "Senior Full Stack AI Developer",
+  headline: "Laravel · TypeScript · AI Agents · LLM Systems · SaaS",
   description:
-    "Senior full-stack engineer with 5+ years shipping Laravel, TypeScript, and production SaaS—APIs, caching, Docker, and maintainable delivery.",
+    "Senior Full Stack AI Developer with 5+ years designing and shipping end-to-end intelligent systems — from multi-LLM backends and real-time voice AI pipelines to modern SaaS frontends and enterprise multi-tenant platforms.",
   locale: "en_US",
   email: "faizali2152@gmail.com",
   github: "https://github.com/faizan14289",
   linkedin: "https://www.linkedin.com/in/faizan-ali-b0b167150",
   /** Place the file at `public/faizan-ali-resume.pdf` (clean URL for recruiters). */
   resumePdfPath: "/faizan-ali-resume.pdf",
-  resumePdfDownloadName: "Faizan-Ali-Senior-Full-Stack-Resume.pdf",
+  resumePdfDownloadName: "Faizan-Ali-Senior-Full-Stack-AI-Developer-Resume.pdf",
   openToWork: {
     title: "Open to opportunities",
     summary:
-      "Senior full-stack & backend-leaning roles · Remote or hybrid · GMT+5 — discuss relocation/visa case-by-case.",
+      "Senior full-stack & AI-leaning roles · Remote or hybrid · GMT+5 — discuss relocation/visa case-by-case.",
     ctaLabel: "Get in touch",
     ctaHref: "/contact",
   },

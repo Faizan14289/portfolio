@@ -31,18 +31,18 @@ export default function CaseStudyDetailView({
   return (
     <motion.div variants={container} initial="hidden" animate="visible">
       <motion.div variants={item}>
-        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--muted)]">
+        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#A0843D]">
           Case study
         </p>
-        <h1 className="font-display mt-2 text-3xl font-semibold tracking-tight text-[var(--foreground)] md:text-4xl">
+        <h1 className="font-hero mt-3 text-[clamp(1.75rem,4vw,2.75rem)] font-normal uppercase leading-tight tracking-tight text-[var(--void)]">
           {cs.title}
         </h1>
-        <p className="mt-4 text-base leading-relaxed text-[var(--muted)]">{cs.summary}</p>
+        <p className="mt-5 text-base leading-relaxed text-[var(--muted)]">{cs.summary}</p>
       </motion.div>
 
       {cs.context ? (
-        <motion.section variants={item} className="mt-10 surface-card p-6 md:p-8">
-          <h2 className="font-display text-lg font-semibold text-[var(--foreground)]">
+        <motion.section variants={item} className="mt-10 surface-card p-8 md:p-10">
+          <h2 className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#A0843D]">
             Context
           </h2>
           <p className="mt-3 text-[var(--muted)] leading-relaxed">{cs.context}</p>
@@ -50,8 +50,8 @@ export default function CaseStudyDetailView({
       ) : null}
 
       {cs.approach ? (
-        <motion.section variants={item} className="mt-6 surface-card p-6 md:p-8">
-          <h2 className="font-display text-lg font-semibold text-[var(--foreground)]">
+        <motion.section variants={item} className="mt-6 surface-card p-8 md:p-10">
+          <h2 className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#A0843D]">
             Approach
           </h2>
           <p className="mt-3 text-[var(--muted)] leading-relaxed">{cs.approach}</p>
@@ -62,7 +62,7 @@ export default function CaseStudyDetailView({
         {cs.tech.map((t) => (
           <span
             key={t}
-            className="inline-flex rounded-md border border-[var(--border)] bg-[var(--surface-2)] px-2.5 py-1 font-mono text-[10px] text-[var(--foreground)]"
+            className="inline-flex rounded-md border border-[#FAFAF9]/10 bg-[var(--page-canvas)] px-2.5 py-1 font-mono text-[9px] uppercase tracking-wide text-[var(--void)]"
           >
             {t}
           </span>
@@ -70,8 +70,8 @@ export default function CaseStudyDetailView({
       </motion.div>
 
       {cs.features && cs.features.length > 0 ? (
-        <motion.section variants={item} className="mt-8 surface-card p-6 md:p-8">
-          <h2 className="font-display text-lg font-semibold text-[var(--foreground)]">
+        <motion.section variants={item} className="mt-8 surface-card p-8 md:p-10">
+          <h2 className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#A0843D]">
             Key features
           </h2>
           <ul className="mt-3 list-inside list-disc space-y-1 text-[var(--muted)]">
@@ -88,19 +88,17 @@ export default function CaseStudyDetailView({
           className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3"
         >
           {cs.metrics.map((m) => (
-            <li key={m.label} className="surface-card p-4 text-center">
-              <p className="font-display text-2xl font-semibold text-[var(--foreground)]">
-                {m.value}
-              </p>
-              <p className="mt-1 text-xs text-[var(--muted)]">{m.label}</p>
+            <li key={m.label} className="surface-dark p-5 text-center">
+              <p className="font-hero text-2xl font-normal text-[#FAFAF9]">{m.value}</p>
+              <p className="mt-1 text-xs text-[#9A8B70]">{m.label}</p>
             </li>
           ))}
         </motion.ul>
       ) : null}
 
       {cs.responsibilities && cs.responsibilities.length > 0 ? (
-        <motion.section variants={item} className="mt-8 surface-card p-6 md:p-8">
-          <h2 className="font-display text-lg font-semibold text-[var(--foreground)]">
+        <motion.section variants={item} className="mt-8 surface-card p-8 md:p-10">
+          <h2 className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#A0843D]">
             Responsibilities
           </h2>
           <ul className="mt-3 list-inside list-disc space-y-1 text-[var(--muted)]">
@@ -112,8 +110,8 @@ export default function CaseStudyDetailView({
       ) : null}
 
       {cs.outcomes && cs.outcomes.length > 0 ? (
-        <motion.section variants={item} className="mt-6 surface-card p-6 md:p-8">
-          <h2 className="font-display text-lg font-semibold text-[var(--foreground)]">
+        <motion.section variants={item} className="mt-6 surface-card p-8 md:p-10">
+          <h2 className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#A0843D]">
             Outcomes
           </h2>
           <ul className="mt-3 list-inside list-disc space-y-1 text-[var(--muted)]">
@@ -125,8 +123,8 @@ export default function CaseStudyDetailView({
       ) : null}
 
       {site ? (
-        <motion.section variants={item} className="mt-8 surface-card p-6 md:p-8">
-          <h2 className="font-display text-lg font-semibold text-[var(--foreground)]">
+        <motion.section variants={item} className="mt-8 surface-card p-8 md:p-10">
+          <h2 className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#A0843D]">
             Site preview
           </h2>
           <div className="mt-4 flex items-start gap-4">
@@ -134,7 +132,7 @@ export default function CaseStudyDetailView({
               <img src={site.favicon} alt="" className="mt-1 size-8 rounded" />
             ) : null}
             <div className="min-w-0 flex-1">
-              <p className="font-medium text-[var(--foreground)]">
+              <p className="font-medium text-[var(--void)]">
                 {site.title || "Site preview"}
               </p>
               {site.description ? (
@@ -148,7 +146,7 @@ export default function CaseStudyDetailView({
                 </ul>
               ) : null}
               {site.image ? (
-                <div className="mt-4 overflow-hidden rounded-lg border border-[var(--border)]">
+                <div className="mt-4 overflow-hidden rounded-lg border border-[#FAFAF9]/10">
                   <img
                     src={site.image}
                     alt=""

@@ -20,20 +20,20 @@ export default function OpenToWorkBanner() {
   if (show === null || !show) return null;
 
   return (
-    <div className="border-b border-[var(--border)] bg-[color-mix(in_oklab,var(--accent)_12%,var(--surface-solid))] px-6 py-2.5">
-      <div className="mx-auto flex max-w-6xl flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+    <div className="border-b border-[#FAFAF9]/[0.06] border-l-4 border-l-[#C9A84C] bg-[#1A1A1A] px-6 py-3">
+      <div className="mx-auto flex max-w-7xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
         <div className="min-w-0">
-          <p className="font-mono text-[10px] font-medium uppercase tracking-[0.16em] text-[var(--accent)]">
+          <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#C9A84C]">
             {site.openToWork.title}
           </p>
-          <p className="mt-0.5 text-sm leading-snug text-[var(--foreground)]">
+          <p className="mt-1 text-sm leading-snug text-[#D4C8B0]">
             {site.openToWork.summary}
           </p>
         </div>
         <div className="flex shrink-0 items-center gap-2">
           <Link
             href={site.openToWork.ctaHref}
-            className="btn-cta inline-flex h-8 items-center px-3 text-xs sm:h-9 sm:px-4 sm:text-sm"
+            className="btn-cta inline-flex h-9 items-center px-4 text-xs"
           >
             {site.openToWork.ctaLabel}
           </Link>
@@ -47,7 +47,7 @@ export default function OpenToWorkBanner() {
               }
               setShow(false);
             }}
-            className="rounded-md border border-[var(--border)] bg-[var(--surface-solid)] px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-wider text-[var(--muted)] hover:text-[var(--foreground)]"
+            className="rounded-lg border border-[#FAFAF9]/[0.08] bg-[#1A1A1A] px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider text-[#9A8B70] hover:text-[#D4C8B0] transition-colors"
           >
             Dismiss
           </button>

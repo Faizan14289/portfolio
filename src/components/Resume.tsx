@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
 import PageHeader from "@/components/PageHeader";
+import PageShell from "@/components/editorial/PageShell";
 import { site } from "@/lib/site";
 
 export default function Resume() {
@@ -36,157 +37,119 @@ export default function Resume() {
   }, []);
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-12 md:py-16">
+    <PageShell>
       <PageHeader
         eyebrow="Résumé"
         title="Faizan Ali"
-        description="Sr. full-stack software engineer (5+ years) · Laravel, TypeScript, Node (mid), scalable APIs and realtime product surfaces."
+        description="Senior Full Stack AI Developer (5+ years) · Multi-LLM systems, real-time voice AI, RAG pipelines, Vue 3, Laravel, and production SaaS."
       />
 
       <div className="flex flex-wrap gap-3">
         <a
           href={site.resumePdfPath}
           download={site.resumePdfDownloadName}
-          className="btn-cta inline-flex h-10 items-center px-4 text-sm"
+          className="btn-cta inline-flex h-10 items-center px-5 text-sm"
         >
           Download PDF
         </a>
         <button
           type="button"
           onClick={() => window.print()}
-          className="inline-flex h-10 items-center rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 text-sm font-medium text-[var(--foreground)]"
+          className="inline-flex h-10 items-center rounded-lg border border-[#FAFAF9]/[0.08] bg-[#1A1A1A] px-5 text-sm font-medium text-[#FAFAF9] hover:border-[#C9A84C]"
         >
           Print
         </button>
       </div>
 
-      <div className="mt-8 flex flex-wrap gap-6 font-mono text-[11px] uppercase tracking-[0.14em]">
-        <a
-          href="https://github.com/faizan14289"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[var(--muted)] hover:text-[var(--foreground)]"
-        >
+      <div className="mt-8 flex flex-wrap gap-8 font-mono text-[10px] uppercase tracking-[0.16em]">
+        <a href="https://github.com/faizan14289" target="_blank" rel="noopener noreferrer" className="text-[#9A8B70] hover:text-[#C9A84C]">
           GitHub
         </a>
-        <a
-          href="https://www.linkedin.com/in/faizan-ali-b0b167150"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[var(--muted)] hover:text-[var(--foreground)]"
-        >
+        <a href="https://www.linkedin.com/in/faizan-ali-b0b167150" target="_blank" rel="noopener noreferrer" className="text-[#9A8B70] hover:text-[#C9A84C]">
           LinkedIn
         </a>
-        <a
-          href="mailto:faizali2152@gmail.com"
-          className="text-[var(--muted)] hover:text-[var(--foreground)]"
-        >
+        <a href="mailto:faizali2152@gmail.com" className="text-[#9A8B70] hover:text-[#C9A84C]">
           Email
         </a>
       </div>
 
       <div className="mt-12 grid gap-8 lg:grid-cols-12">
-        <section className="surface-card p-6 md:p-8 lg:col-span-5">
-          <h2 className="font-display text-lg font-semibold text-[var(--foreground)]">
-            Snapshot
-          </h2>
-          <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
-            Five years delivering production systems in SaaS and commerce—API design,
-            Laravel services, caching, Dockerized deploys, and disciplined test coverage.
+        <section className="surface-card p-8 lg:col-span-5">
+          <h2 className="eyebrow">Snapshot</h2>
+          <p className="mt-4 text-sm leading-relaxed text-[#B8A88A]">
+            Five years delivering production systems in SaaS, AI, and commerce — multi-LLM architectures,
+            real-time voice AI, RAG pipelines, Vue 3 dashboards, Laravel backends, Dockerized deploys,
+            and disciplined test coverage.
           </p>
-          <ul className="mt-5 space-y-3 text-sm text-[var(--muted)]">
+          <ul className="mt-6 space-y-3 text-sm text-[#B8A88A]">
             <li>
-              <span className="font-medium text-[var(--foreground)]">Education · </span>
+              <span className="font-medium text-[#FAFAF9]">Education · </span>
               BS Computer Science, UET Lahore
             </li>
             <li>
-              <span className="font-medium text-[var(--foreground)]">Recent role · </span>
-              Sr. Full Stack, StaffViz (2021–2024)
+              <span className="font-medium text-[#FAFAF9]">Current · </span>
+              Senior Full Stack AI Developer, Botsify (Feb 2026 – Present)
             </li>
             <li>
-              <span className="font-medium text-[var(--foreground)]">Focus · </span>
-              Laravel Octane, Redis/Memcached, Angular/Vue/TS fronts, MySQL at scale
+              <span className="font-medium text-[#FAFAF9]">Focus · </span>
+              LLM orchestration, voice AI, RAG, Vue 3/TypeScript, Laravel Octane
             </li>
           </ul>
         </section>
 
-        <section className="surface-card p-6 md:p-8 lg:col-span-7">
-          <h2 className="font-display text-lg font-semibold text-[var(--foreground)]">
-            Selected stack
-          </h2>
-          <ul className="mt-4 flex flex-wrap gap-2">
+        <section className="surface-card p-8 lg:col-span-7">
+          <h2 className="eyebrow">Selected stack</h2>
+          <ul className="mt-5 flex flex-wrap gap-2">
             {[
-              "HTML/CSS",
-              "JavaScript",
-              "TypeScript",
-              "React",
-              "Vue.js",
-              "Angular",
-              "Java",
-              "Spring Boot",
-              "Laravel",
-              "PHP",
-              "SQL",
-              "MySQL",
-              "Docker",
-              "Redis",
-              "Microservices",
-              "REST APIs",
+              "Vue 3", "TypeScript", "Pinia", "React", "Angular",
+              "Laravel", "PHP", "Node.js", "Java", "Spring Boot",
+              "OpenAI", "Gemini", "AWS Bedrock", "Deepgram", "RAG",
+              "MySQL", "Cloudflare Vectorize", "Docker", "Fly.io", "Twilio",
             ].map((skill) => (
               <li key={skill}>
-                <span className="inline-flex rounded-md border border-[var(--border)] bg-[var(--surface-2)] px-2.5 py-1 font-mono text-[10px] text-[var(--foreground)]">
+                <span className="inline-flex rounded-lg border border-[#FAFAF9]/[0.08] bg-[#0D0D0D] px-2.5 py-1 font-mono text-[9px] uppercase tracking-wide text-[#B8A88A]">
                   {skill}
                 </span>
               </li>
             ))}
           </ul>
 
-          <h3 className="mt-8 font-display text-base font-semibold text-[var(--foreground)]">
-            StaffViz — highlights
-          </h3>
-          <ul className="mt-3 list-inside list-disc space-y-2 text-sm text-[var(--muted)]">
-            <li>Laravel / Octane microservices and solid API boundaries</li>
-            <li>SOPs for coding, unit tests, performance and load practice</li>
-            <li>Memcached/Redis for hot reads; collaboration with Angular/Vue</li>
+          <h3 className="mt-10 eyebrow">Botsify — highlights</h3>
+          <ul className="mt-4 list-inside list-disc space-y-2 text-sm text-[#B8A88A]">
+            <li>Multi-LLM engine with unified LLMService abstraction</li>
+            <li>Real-time voice AI calls with sub-1s latency</li>
+            <li>MCP integration layer for live agent tool connections</li>
+            <li>RAG pipeline with Cloudflare Vectorize</li>
           </ul>
         </section>
       </div>
 
-      <section className="mt-10 surface-card p-6 md:p-10">
-        <h2 className="font-display text-lg font-semibold text-[var(--foreground)]">
-          CV (Markdown preview)
-        </h2>
+      <section className="mt-10 surface-card p-8 md:p-10">
+        <h2 className="eyebrow">CV — Markdown preview</h2>
         {loading ? (
-          <div className="mt-6 flex items-center gap-3 text-sm text-[var(--muted)]">
-            <span
-              className="inline-block size-4 animate-spin rounded-full border-2 border-[var(--border)] border-t-[var(--accent)]"
-              aria-hidden
-            />
+          <div className="mt-6 flex items-center gap-3 text-sm text-[#B8A88A]">
+            <span className="inline-block size-4 animate-spin rounded-full border-2 border-[#FAFAF9]/10 border-t-[#C9A84C]" aria-hidden />
             Loading resume…
           </div>
         ) : error ? (
-          <div className="mt-6 flex flex-wrap items-center gap-4 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800 dark:border-red-900/50 dark:bg-red-950/40 dark:text-red-200">
+          <div className="mt-6 flex flex-wrap items-center gap-4 rounded-lg border border-red-900/30 bg-red-900/10 px-4 py-3 text-sm text-red-400">
             <span>{error}</span>
-            <button
-              type="button"
-              onClick={loadResume}
-              className="rounded-md bg-red-700 px-3 py-1.5 text-white dark:bg-red-600"
-            >
+            <button type="button" onClick={loadResume} className="rounded-md bg-red-800 px-3 py-1.5 text-[#FAFAF9]">
               Retry
             </button>
           </div>
         ) : resumeContent ? (
-          <div className="prose prose-sm md:prose lg:prose-lg mt-6 max-w-none">
+          <div className="prose prose-sm md:prose lg:prose-lg mt-8 max-w-none">
             <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
               {resumeContent}
             </ReactMarkdown>
           </div>
         ) : (
-          <p className="mt-6 text-sm text-[var(--muted)]">
+          <p className="mt-6 text-sm text-[#B8A88A]">
             No CV content found. Add <code className="font-mono text-xs">public/resume.md</code>.
           </p>
         )}
       </section>
-    </div>
+    </PageShell>
   );
 }

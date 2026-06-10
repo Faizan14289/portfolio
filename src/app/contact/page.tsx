@@ -1,46 +1,68 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import PageHeader from "@/components/PageHeader";
+import PageShell from "@/components/editorial/PageShell";
 
 const contactInfo = [
   {
     title: "Email",
     value: "faizali2152@gmail.com",
     link: "mailto:faizali2152@gmail.com",
+    icon: (
+      <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+      </svg>
+    ),
   },
   {
     title: "LinkedIn",
     value: "linkedin.com/in/faizan-ali-b0b167150",
     link: "https://www.linkedin.com/in/faizan-ali-b0b167150",
+    icon: (
+      <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+      </svg>
+    ),
   },
   {
     title: "GitHub",
     value: "github.com/faizan14289",
     link: "https://github.com/faizan14289",
+    icon: (
+      <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+      </svg>
+    ),
   },
   {
     title: "Phone",
     value: "+92 308 3415250",
     link: "tel:+923083415250",
+    icon: (
+      <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+      </svg>
+    ),
   },
 ];
 
-export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">(
-    "idle",
-  );
+const quickLinks = [
+  { label: "Book a call", href: "#", desc: "30-min discovery call" },
+  { label: "View résumé", href: "/resume", desc: "PDF download available" },
+  { label: "See projects", href: "/projects", desc: "Production work samples" },
+];
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
+const inputClass =
+  "w-full rounded-lg border border-[#FAFAF9]/[0.08] bg-[#1A1A1A] px-4 py-3 text-sm text-[#FAFAF9] outline-none transition-all placeholder:text-[#5A4F40] focus:border-[#C9A84C]/50 focus:ring-1 focus:ring-[#C9A84C]/20";
+
+export default function Contact() {
+  const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -53,12 +75,10 @@ export default function Contact() {
       const subject = `[Portfolio] ${formData.subject} — from ${formData.name}`;
       const body = `From: ${formData.name} <${formData.email}>\n\n${formData.message}`;
       const mailto = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
       window.location.href = mailto;
       setSubmitStatus("success");
       setFormData({ name: "", email: "", subject: "", message: "" });
-    } catch (err) {
-      console.error("Open mail client failed:", err);
+    } catch {
       setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);
@@ -67,152 +87,106 @@ export default function Contact() {
   };
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-12 md:py-16">
+    <PageShell>
       <PageHeader
         eyebrow="Contact"
-        title="Let’s talk"
-        description="Tell me about the problem space, your timeline, and how you measure success. I’ll follow up with next steps."
+        title="Let's Build Something Great"
+        description="Tell me about your project, timeline, and goals. I typically reply within one business day."
       />
 
-      <div className="grid gap-10 lg:grid-cols-12">
-        <div className="lg:col-span-7">
-          <form
-            onSubmit={handleSubmit}
-            className="surface-card space-y-5 p-6 md:p-8"
+      {/* Quick links */}
+      <div className="mb-14 grid gap-4 sm:grid-cols-3">
+        {quickLinks.map((link) => (
+          <Link
+            key={link.label}
+            href={link.href}
+            className="group surface-card p-5 transition-all hover:border-[#C9A84C]/30"
           >
-            <h2 className="font-display text-lg font-semibold text-[var(--foreground)]">
-              Send a message
-            </h2>
+            <p className="text-sm font-semibold text-[#FAFAF9] group-hover:text-[#C9A84C]">{link.label}</p>
+            <p className="mt-1 text-xs text-[#9A8B70]">{link.desc}</p>
+          </Link>
+        ))}
+      </div>
+
+      <div className="grid gap-12 lg:grid-cols-12">
+        {/* Form */}
+        <div className="lg:col-span-7">
+          <form onSubmit={handleSubmit} className="surface-card space-y-5 p-8 md:p-10">
+            <h2 className="eyebrow">Send a message</h2>
             <div className="grid gap-5 sm:grid-cols-2">
-              <div className="sm:col-span-1">
-                <label
-                  htmlFor="name"
-                  className="mb-1.5 block font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--muted)]"
-                >
+              <div>
+                <label htmlFor="name" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-[#9A8B70]">
                   Name *
                 </label>
-                <input
-                  id="name"
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2.5 text-sm text-[var(--foreground)] outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
-                  placeholder="Your name"
-                />
+                <input id="name" type="text" name="name" value={formData.name} onChange={handleInputChange} required className={inputClass} placeholder="Your name" />
               </div>
-              <div className="sm:col-span-1">
-                <label
-                  htmlFor="email"
-                  className="mb-1.5 block font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--muted)]"
-                >
+              <div>
+                <label htmlFor="email" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-[#9A8B70]">
                   Email *
                 </label>
-                <input
-                  id="email"
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2.5 text-sm text-[var(--foreground)] outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
-                  placeholder="you@company.com"
-                />
+                <input id="email" type="email" name="email" value={formData.email} onChange={handleInputChange} required className={inputClass} placeholder="you@company.com" />
               </div>
             </div>
             <div>
-              <label
-                htmlFor="subject"
-                className="mb-1.5 block font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--muted)]"
-              >
+              <label htmlFor="subject" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-[#9A8B70]">
                 Subject *
               </label>
-              <input
-                id="subject"
-                type="text"
-                name="subject"
-                value={formData.subject}
-                onChange={handleInputChange}
-                required
-                className="w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2.5 text-sm text-[var(--foreground)] outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
-                placeholder="e.g. Staff engineer search"
-              />
+              <input id="subject" type="text" name="subject" value={formData.subject} onChange={handleInputChange} required className={inputClass} placeholder="Role, project, or question" />
             </div>
             <div>
-              <label
-                htmlFor="message"
-                className="mb-1.5 block font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--muted)]"
-              >
+              <label htmlFor="message" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-[#9A8B70]">
                 Message *
               </label>
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleInputChange}
-                required
-                rows={6}
-                className="w-full resize-none rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2.5 text-sm text-[var(--foreground)] outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
-                placeholder="Context, stack, constraints…"
-              />
+              <textarea id="message" name="message" value={formData.message} onChange={handleInputChange} required rows={6} className={`${inputClass} resize-none`} placeholder="Stack, constraints, timeline, budget…" />
             </div>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="btn-cta inline-flex h-11 items-center px-5 text-sm disabled:opacity-50"
-            >
+            <button type="submit" disabled={isSubmitting} className="btn-cta inline-flex h-11 items-center px-6 text-sm disabled:opacity-50">
               {isSubmitting ? "Opening mail…" : "Compose in email"}
             </button>
-            {submitStatus === "success" ? (
-              <p className="text-sm text-[var(--muted)]" role="status">
-                Your mail client should open—if not, use the email address on the right.
-              </p>
-            ) : null}
-            {submitStatus === "error" ? (
-              <p className="text-sm text-red-600 dark:text-red-400" role="alert">
-                Something went wrong. Please try again or email directly.
-              </p>
-            ) : null}
+            {submitStatus === "success" && (
+              <p className="text-sm text-[#B8A88A]" role="status">If your mail client did not open, use the addresses on the right.</p>
+            )}
+            {submitStatus === "error" && (
+              <p className="text-sm text-red-600" role="alert">Something went wrong. Please email directly.</p>
+            )}
           </form>
         </div>
 
-        <aside className="lg:col-span-5 space-y-4">
-          <div className="surface-card p-6 md:p-8">
-            <h2 className="font-display text-lg font-semibold text-[var(--foreground)]">
-              Direct lines
-            </h2>
-            <ul className="mt-5 space-y-3">
+        {/* Contact info sidebar */}
+        <aside className="space-y-5 lg:col-span-5">
+          <div className="surface-dark p-8">
+            <h2 className="eyebrow">Direct</h2>
+            <ul className="mt-6 space-y-5">
               {contactInfo.map((info) => (
                 <li key={info.title}>
-                  <a
-                    href={info.link}
-                    target={info.link.startsWith("http") ? "_blank" : undefined}
-                    rel={info.link.startsWith("http") ? "noopener noreferrer" : undefined}
-                    className="group block rounded-md border border-transparent px-0 py-2 transition-colors hover:border-[var(--border)]"
-                  >
-                    <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--muted)]">
-                      {info.title}
+                  <a href={info.link} target={info.link.startsWith("http") ? "_blank" : undefined} rel={info.link.startsWith("http") ? "noopener noreferrer" : undefined} className="group flex items-start gap-4">
+                    <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#FAFAF9]/[0.08] text-[#9A8B70] transition-colors group-hover:border-[#C9A84C]/30 group-hover:text-[#C9A84C]">
+                      {info.icon}
                     </span>
-                    <span className="mt-1 block text-sm font-medium text-[var(--foreground)] group-hover:underline decoration-1 underline-offset-4">
-                      {info.value}
-                    </span>
+                    <div>
+                      <span className="text-xs font-medium uppercase tracking-wider text-[#9A8B70]">{info.title}</span>
+                      <span className="mt-0.5 block text-sm text-[#D4C8B0] transition-colors group-hover:text-[#C9A84C]">{info.value}</span>
+                    </div>
                   </a>
                 </li>
               ))}
             </ul>
           </div>
+
           <div className="surface-card p-6">
-            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--muted)]">
-              Response
+            <p className="eyebrow">Response time</p>
+            <p className="mt-3 text-sm leading-relaxed text-[#B8A88A]">
+              I aim to reply within one business day. For hiring inquiries, include level, location policy, and stack for the fastest response.
             </p>
-            <p className="mt-2 text-sm text-[var(--muted)] leading-relaxed">
-              I aim to reply within one business day for serious inquiries. If you are
-              hiring, include role level, location policy, and stack.
+          </div>
+
+          <div className="surface-card p-6">
+            <p className="eyebrow">Timezone</p>
+            <p className="mt-3 text-sm leading-relaxed text-[#B8A88A]">
+              GMT+5 (Pakistan). Flexible for US morning / EU afternoon overlap.
             </p>
           </div>
         </aside>
       </div>
-    </div>
+    </PageShell>
   );
 }

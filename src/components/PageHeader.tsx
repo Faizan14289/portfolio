@@ -11,20 +11,18 @@ export default function PageHeader({
   description,
   align = "left",
 }: PageHeaderProps) {
-  const alignClass = align === "center" ? "text-center mx-auto" : "";
+  const alignClass = align === "center" ? "mx-auto text-center" : "";
 
   return (
-    <header className={`mb-12 md:mb-16 max-w-2xl ${alignClass}`}>
+    <header className={`mb-14 md:mb-20 max-w-3xl ${alignClass}`}>
       {eyebrow ? (
-        <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--accent)] mb-4">
-          {eyebrow}
-        </p>
+        <p className="eyebrow mb-4">{eyebrow}</p>
       ) : null}
-      <h1 className="font-display text-3xl md:text-4xl lg:text-[2.75rem] font-semibold tracking-tight text-[var(--foreground)] leading-[1.15]">
+      <h1 className="font-hero text-[clamp(2rem,5vw,3.25rem)] font-normal uppercase leading-[1.05] tracking-tight text-[#FAFAF9]">
         {title}
       </h1>
       {description ? (
-        <p className="mt-4 text-base md:text-lg text-[var(--muted)] leading-relaxed">
+        <p className="mt-6 max-w-2xl text-base leading-relaxed text-[#B8A88A] md:text-lg">
           {description}
         </p>
       ) : null}
