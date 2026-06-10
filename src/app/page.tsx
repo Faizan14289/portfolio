@@ -7,6 +7,7 @@ import { useRef, useState, useEffect } from "react";
 import { services } from "@/data/services";
 import { testimonials } from "@/data/testimonials";
 import { site } from "@/lib/site";
+import Typewriter from "@/components/Typewriter";
 
 /* ─── Animated counter ─── */
 function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
@@ -173,11 +174,8 @@ export default function Home() {
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             >
               <span className="eyebrow">Senior Full Stack AI Developer</span>
-              <h1 className="font-hero mt-5 text-[clamp(2.5rem,6vw,4.5rem)] leading-[1.05] tracking-tight">
-                <span className="text-[#FAFAF9]">Ship </span>
-                <span className="text-gradient">Intelligent</span>
-                <br />
-                <span className="text-[#FAFAF9]">Systems at Scale</span>
+              <h1 className="font-hero mt-5 text-[clamp(2.5rem,6vw,4.5rem)] leading-[1.05] tracking-tight text-[#FAFAF9]">
+                <Typewriter text="Ship Intelligent Systems at Scale" speed={55} delay={400} />
               </h1>
               <p className="mt-6 max-w-lg text-base leading-relaxed text-[#B8A88A] md:text-lg">
                 Multi-LLM backends, real-time voice AI, RAG pipelines, and production SaaS —
