@@ -47,7 +47,7 @@ export default function CursorGlow() {
       ref={glowRef}
       className="pointer-events-none fixed left-0 top-0 z-[90] h-[300px] w-[300px] rounded-full opacity-30 mix-blend-screen"
       style={{
-        background: "radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%)",
+        background: "radial-gradient(circle, rgba(124,58,237,0.14) 0%, transparent 70%)",
         willChange: "transform",
       }}
       aria-hidden="true"

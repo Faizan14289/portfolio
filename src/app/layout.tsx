@@ -7,6 +7,7 @@ import JsonLd from "@/components/JsonLd";
 import GrainOverlay from "@/components/GrainOverlay";
 import CursorGlow from "@/components/CursorGlow";
 import ScrollProgress from "@/components/ScrollProgress";
+import CustomCursor from "@/components/CustomCursor";
 import { getMetadataBase, getSiteUrl, site } from "@/lib/site";
 
 const newsreader = Newsreader({
@@ -87,6 +88,7 @@ export default function RootLayout({
         <JsonLd />
         <GrainOverlay />
         <CursorGlow />
+        <CustomCursor />
         <ScrollProgress />
         <AppChrome>{children}</AppChrome>
         <SiteFooter />

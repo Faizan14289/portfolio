@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import PageHeader from "@/components/PageHeader";
 import PageShell from "@/components/editorial/PageShell";
+import TiltCard from "@/components/TiltCard";
 import { services } from "@/data/services";
 
 const container = {
@@ -39,11 +40,12 @@ export default function ServicesPage() {
         className="grid gap-5 md:grid-cols-2 lg:grid-cols-3"
       >
         {services.map((svc) => (
-          <motion.article key={svc.slug} variants={item} className="surface-card flex flex-col p-7">
-            <div className="flex items-start gap-3">
-              <span className="text-xl text-[#A0843D]" aria-hidden>
-                {svc.icon}
-              </span>
+          <TiltCard key={svc.slug} className="service-card h-full">
+            <motion.article variants={item} className="surface-card flex h-full flex-col p-7">
+              <div className="flex items-start gap-3">
+                <span className="text-xl text-[#7c3aed]" aria-hidden>
+                  {svc.icon}
+                </span>
               <h2 className="font-hero text-lg font-normal uppercase leading-snug text-[var(--void)]">
                 {svc.title}
               </h2>
@@ -65,7 +67,8 @@ export default function ServicesPage() {
                 ))}
               </ul>
             ) : null}
-          </motion.article>
+            </motion.article>
+          </TiltCard>
         ))}
       </motion.div>
 

@@ -38,22 +38,37 @@ export default function TestimonialsPage() {
         animate="visible"
         className="grid gap-5 md:grid-cols-2"
       >
-        {testimonials.map((t) => (
-          <motion.li key={t.id} variants={item}>
-            <blockquote className="surface-dark h-full p-8 md:p-10">
-              <p className="font-hero text-xl font-normal leading-snug text-[#FAFAF9]">
-                “{t.quote}”
-              </p>
-              <footer className="mt-8 border-t border-[#FAFAF9]/10 pt-6 text-sm text-[#9A8B70]">
-                <span className="font-medium text-[#D4C8B0]">{t.name}</span>
-                <span className="text-[#7A6D58]"> · </span>
-                <span>
-                  {t.role}, {t.company}
-                </span>
-              </footer>
-            </blockquote>
-          </motion.li>
-        ))}
+        {testimonials.map((t, i) => {
+          const fromLeft = i % 2 === 0;
+          return (
+            <motion.li
+              key={t.id}
+              initial={{ opacity: 0, x: fromLeft ? -40 : 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <blockquote className="group surface-dark h-full p-8 md:p-10">
+                <p className="font-hero text-xl font-normal leading-snug text-[#FAFAF9]">
+                  <span className="inline-block text-[#a78bfa] transition-transform duration-300 group-hover:scale-[1.15]">
+                    &ldquo;
+                  </span>
+                  {t.quote}
+                  <span className="inline-block text-[#a78bfa] transition-transform duration-300 group-hover:scale-[1.15]">
+                    &rdquo;
+                  </span>
+                </p>
+                <footer className="mt-8 border-t border-[#FAFAF9]/10 pt-6 text-sm text-[#9A8B70]">
+                  <span className="font-medium text-[#D4C8B0]">{t.name}</span>
+                  <span className="text-[#7A6D58]"> · </span>
+                  <span>
+                    {t.role}, {t.company}
+                  </span>
+                </footer>
+              </blockquote>
+            </motion.li>
+          );
+        })}
       </motion.ul>
 
       <div className="mt-16 text-center">

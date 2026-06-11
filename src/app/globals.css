@@ -260,3 +260,32 @@ body {
   background: var(--surface-2);
   color: var(--foreground);
 }
+
+/* ─── Animation layer utilities ─── */
+
+/* Float animation for profile / featured images */
+.float-animation {
+  animation: float-y 3s ease-in-out infinite alternate;
+}
+
+@keyframes float-y {
+  from { transform: translateY(0); }
+  to { transform: translateY(-8px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float-animation {
+    animation: none;
+  }
+}
+
+/* Hide default cursor when custom cursor is active (desktop only) */
+@media (hover: hover) and (pointer: fine) {
+  body:has(.custom-cursor-active) {
+    cursor: none;
+  }
+  body:has(.custom-cursor-active) a,
+  body:has(.custom-cursor-active) button {
+    cursor: none;
+  }
+}

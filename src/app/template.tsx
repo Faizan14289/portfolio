@@ -11,9 +11,9 @@ export default function Template({ children }: { children: React.ReactNode }) {
     <AnimatePresence mode="wait">
       <motion.div
         key={pathname}
-        initial={reduce ? { opacity: 1 } : { opacity: 0, y: 12 }}
+        initial={reduce ? { opacity: 1 } : { opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        exit={reduce ? { opacity: 0 } : { opacity: 0, y: -8 }}
+        exit={{ opacity: 0 }}
         transition={{
           duration: reduce ? 0 : 0.35,
           ease: [0.22, 1, 0.36, 1],

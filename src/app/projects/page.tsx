@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import PageHeader from "@/components/PageHeader";
 import PageShell from "@/components/editorial/PageShell";
+import TiltCard from "@/components/TiltCard";
 
 const projects = [
   {
@@ -180,10 +181,11 @@ export default function Projects() {
 
       <ul className="mt-12 grid gap-5 md:grid-cols-2">
         {filteredProjects.map((project) => (
-          <li key={project.id} className="surface-card flex flex-col p-7">
-            <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#A0843D]">
-              {project.category}
-            </span>
+          <TiltCard key={project.id} className="project-card h-full">
+            <li className="surface-card flex h-full flex-col p-7">
+              <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#a78bfa]">
+                {project.category}
+              </span>
             <h2 className="mt-3 font-hero text-xl font-normal uppercase leading-snug tracking-tight text-[var(--void)]">
               {project.title}
             </h2>
@@ -220,7 +222,8 @@ export default function Projects() {
               </Link>
             </div>
           </li>
-        ))}
+        </TiltCard>
+      ))}
       </ul>
 
       <section className="surface-dark mt-20 p-10 md:p-12">

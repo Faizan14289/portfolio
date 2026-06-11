@@ -8,35 +8,82 @@ import { services } from "@/data/services";
 import { testimonials } from "@/data/testimonials";
 import { site } from "@/lib/site";
 import Typewriter from "@/components/Typewriter";
+import HeroOrb from "@/components/HeroOrb";
+import AnimatedCounter from "@/components/AnimatedCounter";
+import ProcessSteps from "@/components/ProcessSteps";
+import MagneticButton from "@/components/MagneticButton";
+import TiltCard from "@/components/TiltCard";
+import { Service } from "@/data/services";
 
-/* ─── Animated counter ─── */
-function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true });
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    if (!inView) return;
-    let start = 0;
-    const duration = 2000;
-    const increment = target / (duration / 16);
-    const timer = setInterval(() => {
-      start += increment;
-      if (start >= target) {
-        setCount(target);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(start));
-      }
-    }, 16);
-    return () => clearInterval(timer);
-  }, [inView, target]);
-
+/* ─── Service card ─── */
+function ServiceCard({ service }: { service: Service }) {
   return (
-    <span ref={ref}>
-      {count}
-      {suffix}
-    </span>
+    <TiltCard className="service-card h-full">
+      <motion.div variants={fadeUp} className="group h-full surface-card p-8">
+        <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-[#7c3aed]/10 text-2xl transition-colors group-hover:bg-[#7c3aed]/20">
+          {service.icon}
+        </div>
+        <h3 className="mt-5 text-lg font-semibold text-[#FAFAF9]">{service.title}</h3>
+        <p className="mt-3 text-sm leading-relaxed text-[#9A8B70]">{service.summary}</p>
+        <Link href={`/services#${service.slug}`} className="mt-5 inline-flex items-center text-sm font-medium text-[#a78bfa] hover:text-[#c084fc] hover:underline">
+          Learn more
+          <svg className="ml-1 h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </Link>
+      </motion.div>
+    </TiltCard>
+  );
+}
+
+/* ─── Project card ─── */
+interface ProjectItem {
+  title: string;
+  category: string;
+  description: string;
+  href: string;
+  color: string;
+}
+
+function ProjectCard({ project, index }: { project: ProjectItem; index: number }) {
+  const localReduce = useReducedMotion();
+  return (
+    <TiltCard className="project-card h-full">
+      <motion.div
+        initial={localReduce ? undefined : { opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: index * 0.1, duration: 0.5 }}
+        className="group h-full surface-card overflow-hidden"
+      >
+        <div className="relative aspect-[16/10] overflow-hidden bg-[#1A1A1A]">
+          <div className={`absolute inset-0 bg-gradient-to-br ${project.color}`} />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-center">
+              <span className="font-hero text-5xl text-[#FAFAF9]/[0.08]">{project.title[0]}</span>
+            </div>
+          </div>
+          <div className="absolute bottom-3 left-1/2 h-1 w-16 -translate-x-1/2 rounded-full bg-[#FAFAF9]/[0.06]" />
+          <div className="absolute inset-0 flex items-center justify-center bg-[#7c3aed]/80 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
+            <a
+              href={project.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-10 items-center rounded-lg bg-[#FAFAF9] px-5 text-sm font-semibold text-[#0D0D0D] transition-transform hover:scale-105"
+            >
+              View Project
+            </a>
+          </div>
+        </div>
+        <div className="p-6">
+          <span className="text-xs font-medium uppercase tracking-wider text-[#a78bfa]">
+            {project.category}
+          </span>
+          <h3 className="mt-2 text-lg font-semibold text-[#FAFAF9]">{project.title}</h3>
+          <p className="mt-2 text-sm leading-relaxed text-[#9A8B70]">{project.description}</p>
+        </div>
+      </motion.div>
+    </TiltCard>
   );
 }
 
@@ -47,30 +94,39 @@ function TestimonialCarousel() {
 
   return (
     <div className="mx-auto max-w-3xl text-center">
-      <div className="relative min-h-[180px]">
-        {testimonials.map((t, i) => (
-          <motion.div
-            key={t.id}
-            initial={false}
-            animate={{
-              opacity: i === active ? 1 : 0,
-              y: i === active ? 0 : 20,
-              position: i === active ? "relative" : "absolute",
-            }}
-            transition={{ duration: reduce ? 0 : 0.4 }}
-            className="inset-0"
-          >
-            <p className="text-lg leading-relaxed text-[#B8A88A] md:text-xl">
-              &ldquo;{t.quote}&rdquo;
-            </p>
-            <div className="mt-8">
-              <p className="font-semibold text-[#FAFAF9]">{t.name}</p>
-              <p className="mt-1 text-sm text-[#9A8B70]">
-                {t.role} — {t.company}
+      <div className="relative min-h-[200px]">
+        {testimonials.map((t, i) => {
+          const fromLeft = i % 2 === 0;
+          return (
+            <motion.div
+              key={t.id}
+              initial={false}
+              animate={{
+                opacity: i === active ? 1 : 0,
+                x: i === active ? 0 : fromLeft ? -60 : 60,
+                position: i === active ? "relative" : "absolute",
+              }}
+              transition={{ duration: reduce ? 0 : 0.5, ease: [0.22, 1, 0.36, 1] }}
+              className="inset-0"
+            >
+              <p className="group text-lg leading-relaxed text-[#B8A88A] md:text-xl">
+                <span className="inline-block text-[#a78bfa] transition-transform duration-300 group-hover:scale-[1.15]">
+                  &ldquo;
+                </span>
+                {t.quote}
+                <span className="inline-block text-[#a78bfa] transition-transform duration-300 group-hover:scale-[1.15]">
+                  &rdquo;
+                </span>
               </p>
-            </div>
-          </motion.div>
-        ))}
+              <div className="mt-8">
+                <p className="font-semibold text-[#FAFAF9]">{t.name}</p>
+                <p className="mt-1 text-sm text-[#9A8B70]">
+                  {t.role} — {t.company}
+                </p>
+              </div>
+            </motion.div>
+          );
+        })}
       </div>
       <div className="mt-8 flex justify-center gap-2">
         {testimonials.map((_, i) => (
@@ -78,7 +134,7 @@ function TestimonialCarousel() {
             key={i}
             onClick={() => setActive(i)}
             className={`h-2 rounded-full transition-all ${
-              i === active ? "w-8 bg-[#C9A84C]" : "w-2 bg-[#5A4F40]"
+              i === active ? "w-8 bg-[#7c3aed]" : "w-2 bg-[#5A4F40]"
             }`}
             aria-label={`Go to testimonial ${i + 1}`}
           />
@@ -164,62 +220,82 @@ export default function Home() {
           HERO
       ═══════════════════════════════════════════ */}
       <section className="relative overflow-hidden bg-[#0D0D0D] py-20 md:py-28 lg:py-32">
-        <div className="pointer-events-none absolute right-0 top-1/2 h-[600px] w-[600px] -translate-y-1/2 translate-x-1/4 rounded-full bg-[#C9A84C]/[0.03] blur-[120px]" aria-hidden />
-        
+        <div className="pointer-events-none absolute right-0 top-1/2 h-[600px] w-[600px] -translate-y-1/2 translate-x-1/4 rounded-full bg-[#7c3aed]/[0.04] blur-[120px]" aria-hidden />
+
         <div className="relative mx-auto max-w-7xl px-6">
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-            <motion.div
-              initial={reduce ? undefined : { opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <span className="eyebrow">Senior Full Stack AI Developer</span>
-              <h1 className="font-hero mt-5 text-[clamp(2.5rem,6vw,4.5rem)] leading-[1.05] tracking-tight text-[#FAFAF9]">
-                <Typewriter text="Ship Intelligent Systems at Scale" speed={55} delay={400} />
-              </h1>
-              <p className="mt-6 max-w-lg text-base leading-relaxed text-[#B8A88A] md:text-lg">
+            <div>
+              <motion.span
+                initial={reduce ? undefined : { opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0, ease: [0.22, 1, 0.36, 1] }}
+                className="eyebrow inline-block"
+              >
+                Senior Full Stack AI Developer
+              </motion.span>
+              <motion.h1
+                initial={reduce ? undefined : { opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                className="font-hero mt-5 min-h-[1.2em] text-[clamp(2.5rem,6vw,4.5rem)] leading-[1.05] tracking-tight text-[#FAFAF9]"
+              >
+                <Typewriter cursorColor="#7c3aed" />
+              </motion.h1>
+              <motion.p
+                initial={reduce ? undefined : { opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                className="mt-6 max-w-lg text-base leading-relaxed text-[#B8A88A] md:text-lg"
+              >
                 Multi-LLM backends, real-time voice AI, RAG pipelines, and production SaaS —
                 from concept to deployment.
-              </p>
-              <div className="mt-8 flex flex-wrap gap-4">
-                <Link href="/projects" className="btn-cta inline-flex h-12 items-center px-7 text-sm">
-                  View My Work
-                </Link>
-                <Link href="/contact" className="btn-cta-outline inline-flex h-12 items-center px-7 text-sm">
-                  Get In Touch
-                </Link>
-              </div>
-              <div className="mt-12 flex gap-8 border-t border-[#FAFAF9]/[0.06] pt-8">
+              </motion.p>
+              <motion.div
+                initial={reduce ? undefined : { opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                className="mt-8 flex flex-wrap gap-4"
+              >
+                <MagneticButton>
+                  <Link href="/projects" className="btn-cta inline-flex h-12 items-center px-7 text-sm">
+                    View My Work
+                  </Link>
+                </MagneticButton>
+                <MagneticButton>
+                  <Link href="/contact" className="btn-cta-outline inline-flex h-12 items-center px-7 text-sm">
+                    Get In Touch
+                  </Link>
+                </MagneticButton>
+              </motion.div>
+              <motion.div
+                initial={reduce ? undefined : { opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                className="mt-12 flex gap-8 border-t border-[#FAFAF9]/[0.06] pt-8"
+              >
                 {[
-                  { num: "5+", label: "Years" },
-                  { num: "6+", label: "LLM Providers" },
-                  { num: "100%", label: "Remote" },
+                  { num: 5, suffix: "+", label: "Years" },
+                  { num: 6, suffix: "+", label: "LLM Providers" },
+                  { num: 100, suffix: "%", label: "Remote" },
                 ].map((s) => (
                   <div key={s.label}>
-                    <p className="font-hero text-2xl text-[#FAFAF9]">{s.num}</p>
+                    <p className="font-hero text-2xl text-[#FAFAF9]">
+                      <AnimatedCounter target={s.num} suffix={s.suffix} duration={1800} />
+                    </p>
                     <p className="mt-1 text-xs text-[#9A8B70]">{s.label}</p>
                   </div>
                 ))}
-              </div>
-            </motion.div>
+              </motion.div>
+            </div>
 
             <motion.div
-              initial={reduce ? undefined : { opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-              className="relative hidden lg:block"
+              initial={reduce ? undefined : { opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="relative flex justify-center lg:justify-end"
+              data-cursor-grab
             >
-              <div className="relative mx-auto w-fit">
-                <div className="absolute -inset-3 rounded-2xl bg-gradient-to-br from-[#C9A84C]/20 via-transparent to-[#A0843D]/10 blur-xl" />
-                <div className="relative aspect-[3/4] w-[360px] overflow-hidden rounded-2xl border border-[#FAFAF9]/[0.08]">
-                  <Image src="/homepage_image.png" alt={site.name} fill priority sizes="400px" className="object-cover object-top" />
-                  <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#0D0D0D] to-transparent" />
-                </div>
-                <div className="absolute -bottom-4 -left-4 rounded-xl border border-[#FAFAF9]/[0.08] bg-[#1A1A1A]/90 p-4 backdrop-blur-md">
-                  <p className="font-hero text-2xl text-[#C9A84C]">5+</p>
-                  <p className="mt-0.5 text-xs text-[#9A8B70]">Years Experience</p>
-                </div>
-              </div>
+              <HeroOrb />
             </motion.div>
           </div>
         </div>
@@ -273,49 +349,9 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <motion.div
-            className="mt-14 grid gap-6 md:grid-cols-4"
-            variants={stagger}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-          >
-            {[
-              {
-                step: "01",
-                title: "Discover",
-                desc: "Deep dive into your business, users, and constraints. I ask hard questions before writing code.",
-              },
-              {
-                step: "02",
-                title: "Architect",
-                desc: "Design the system, data model, and API contracts. Clear specs before implementation.",
-              },
-              {
-                step: "03",
-                title: "Build",
-                desc: "Iterative development with regular demos. Tests, documentation, and clean commits.",
-              },
-              {
-                step: "04",
-                title: "Deliver",
-                desc: "Production deploy with monitoring, handoff docs, and a 30-day support window.",
-              },
-            ].map((item) => (
-              <motion.div
-                key={item.step}
-                variants={fadeUp}
-                className="group relative surface-card p-8"
-              >
-                <span className="font-hero text-4xl text-[#5A4F40] transition-colors group-hover:text-[#C9A84C]">
-                  {item.step}
-                </span>
-                <h3 className="mt-4 text-lg font-semibold text-[#FAFAF9]">{item.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-[#9A8B70]">{item.desc}</p>
-                <div className="absolute -bottom-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-[#C9A84C]/30 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-              </motion.div>
-            ))}
-          </motion.div>
+          <div className="mt-14">
+            <ProcessSteps />
+          </div>
         </div>
       </section>
 
@@ -346,19 +382,7 @@ export default function Home() {
             viewport={{ once: true, margin: "-80px" }}
           >
             {services.slice(0, 3).map((service) => (
-              <motion.div key={service.slug} variants={fadeUp} className="group surface-card p-8">
-                <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-[#C9A84C]/10 text-2xl transition-colors group-hover:bg-[#C9A84C]/20">
-                  {service.icon}
-                </div>
-                <h3 className="mt-5 text-lg font-semibold text-[#FAFAF9]">{service.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-[#9A8B70]">{service.summary}</p>
-                <Link href={`/services#${service.slug}`} className="mt-5 inline-flex items-center text-sm font-medium text-[#C9A84C] hover:underline">
-                  Learn more
-                  <svg className="ml-1 h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                  </svg>
-                </Link>
-              </motion.div>
+              <ServiceCard key={service.slug} service={service} />
             ))}
           </motion.div>
 
@@ -384,8 +408,8 @@ export default function Home() {
               className="relative"
             >
               <div className="relative mx-auto w-fit lg:mx-0">
-                <div className="absolute -inset-3 rounded-2xl bg-gradient-to-br from-[#C9A84C]/10 via-transparent to-[#A0843D]/5 blur-xl" />
-                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-[#FAFAF9]/[0.08]">
+                <div className="absolute -inset-3 rounded-2xl bg-gradient-to-br from-[#7c3aed]/10 via-transparent to-[#4c1d95]/5 blur-xl" />
+                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-[#FAFAF9]/[0.08] float-animation">
                   <Image src="/homepage_image.png" alt={site.name} fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover object-top" />
                 </div>
               </div>
@@ -405,24 +429,42 @@ export default function Home() {
                 Botsify's entire agentic AI layer — multi-LLM engines, real-time voice agents,
                 RAG pipelines, and a Vue 3 AI management dashboard.
               </p>
-              <ul className="mt-6 space-y-3">
+              <motion.ul
+                className="mt-6 space-y-3"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={{
+                  hidden: {},
+                  visible: { transition: { staggerChildren: reduce ? 0 : 0.2, delayChildren: 0.2 } },
+                }}
+              >
                 {[
                   "Clean architecture and documented decisions",
                   "Docker, Redis, and disciplined deployments",
                   "Testing, SOPs, and maintainable codebases",
                 ].map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-[#B8A88A]">
-                    <svg className="mt-0.5 h-5 w-5 shrink-0 text-[#C9A84C]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <motion.li
+                    key={item}
+                    variants={{
+                      hidden: { opacity: 0, x: -20 },
+                      visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+                    }}
+                    className="flex items-start gap-3 text-[#B8A88A]"
+                  >
+                    <svg className="mt-0.5 h-5 w-5 shrink-0 text-[#7c3aed]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                     {item}
-                  </li>
+                  </motion.li>
                 ))}
-              </ul>
+              </motion.ul>
               <div className="mt-8">
-                <Link href="/about" className="btn-cta inline-flex h-11 items-center px-6 text-sm">
-                  More About Me
-                </Link>
+                <MagneticButton>
+                  <Link href="/about" className="btn-cta inline-flex h-11 items-center px-6 text-sm">
+                    More About Me
+                  </Link>
+                </MagneticButton>
               </div>
             </motion.div>
           </div>
@@ -484,60 +526,24 @@ export default function Home() {
                 category: "AI · Agentic Platform",
                 description: "Multi-LLM agentic AI layer with real-time voice calls, RAG pipelines, MCP integrations, and a Vue 3 management dashboard.",
                 href: "https://botsify.com/",
-                color: "from-[#C9A84C]/25 to-[#D4B86A]/10",
+                color: "from-[#7c3aed]/25 to-[#4c1d95]/10",
               },
               {
                 title: "StaffViz",
                 category: "SaaS · Workforce Intelligence",
                 description: "End-to-end platform for recruitment, scheduling, tasks, and analytics with realtime updates.",
                 href: "https://www.staffviz.com/",
-                color: "from-[#A0843D]/20 to-[#C9A84C]/10",
+                color: "from-[#a78bfa]/20 to-[#7c3aed]/10",
               },
               {
                 title: "MyTailorStore",
                 category: "E‑commerce · Custom Tailoring",
                 description: "High-conversion bespoke fashion storefront with configurable garments and fabric catalog.",
                 href: "https://www.mytailorstore.com/",
-                color: "from-[#D4B86A]/20 to-[#A0843D]/10",
+                color: "from-[#c084fc]/20 to-[#7c3aed]/10",
               },
             ].map((project, i) => (
-              <motion.div
-                key={project.title}
-                initial={reduce ? undefined : { opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
-                className="group surface-card overflow-hidden"
-              >
-                {/* Mockup card */}
-                <div className="relative aspect-[16/10] overflow-hidden bg-[#1A1A1A]">
-                  <div className={`absolute inset-0 bg-gradient-to-br ${project.color}`} />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center">
-                      <span className="font-hero text-5xl text-[#FAFAF9]/[0.08]">{project.title[0]}</span>
-                    </div>
-                  </div>
-                  {/* Device frame decoration */}
-                  <div className="absolute bottom-3 left-1/2 h-1 w-16 -translate-x-1/2 rounded-full bg-[#FAFAF9]/[0.06]" />
-                  <div className="absolute inset-0 flex items-center justify-center bg-[#A0843D]/80 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
-                    <a
-                      href={project.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex h-10 items-center rounded-lg bg-[#FAFAF9] px-5 text-sm font-semibold text-[#0D0D0D] transition-transform hover:scale-105"
-                    >
-                      View Project
-                    </a>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <span className="text-xs font-medium uppercase tracking-wider text-[#C9A84C]">
-                    {project.category}
-                  </span>
-                  <h3 className="mt-2 text-lg font-semibold text-[#FAFAF9]">{project.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-[#9A8B70]">{project.description}</p>
-                </div>
-              </motion.div>
+              <ProjectCard key={project.title} project={project} index={i} />
             ))}
           </div>
 
@@ -693,30 +699,31 @@ export default function Home() {
                 features: ["Recorded sessions", "Written recommendations", "Follow-up Q&A"],
               },
             ].map((plan) => (
-              <motion.div
-                key={plan.name}
-                variants={scaleIn}
-                className={`relative surface-card p-8 ${plan.popular ? "border-[#C9A84C]/30" : ""}`}
-              >
-                {plan.popular && (
-                  <span className="absolute -top-3 left-8 rounded-full bg-[#C9A84C] px-3 py-1 text-xs font-semibold text-[#0D0D0D]">
-                    Most Popular
-                  </span>
-                )}
-                <p className="text-sm font-medium text-[#9A8B70]">{plan.price}</p>
-                <h3 className="mt-2 text-xl font-semibold text-[#FAFAF9]">{plan.name}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-[#9A8B70]">{plan.desc}</p>
-                <ul className="mt-6 space-y-2">
-                  {plan.features.map((f) => (
-                    <li key={f} className="flex items-center gap-2 text-sm text-[#B8A88A]">
-                      <svg className="h-4 w-4 text-[#C9A84C]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                      </svg>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
+              <TiltCard key={plan.name} className="engagement-card h-full">
+                <motion.div
+                  variants={scaleIn}
+                  className={`relative h-full surface-card p-8 ${plan.popular ? "border-[#7c3aed]/30" : ""}`}
+                >
+                  {plan.popular && (
+                    <span className="absolute -top-3 left-8 rounded-full bg-[#7c3aed] px-3 py-1 text-xs font-semibold text-[#FAFAF9]">
+                      Most Popular
+                    </span>
+                  )}
+                  <p className="text-sm font-medium text-[#9A8B70]">{plan.price}</p>
+                  <h3 className="mt-2 text-xl font-semibold text-[#FAFAF9]">{plan.name}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-[#9A8B70]">{plan.desc}</p>
+                  <ul className="mt-6 space-y-2">
+                    {plan.features.map((f) => (
+                      <li key={f} className="flex items-center gap-2 text-sm text-[#B8A88A]">
+                        <svg className="h-4 w-4 text-[#7c3aed]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              </TiltCard>
             ))}
           </motion.div>
         </div>
@@ -777,7 +784,7 @@ export default function Home() {
           CTA
       ═══════════════════════════════════════════ */}
       <section className="relative overflow-hidden bg-[#1A1A1A] py-20 md:py-28">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#C9A84C]/[0.02] to-transparent" aria-hidden />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#7c3aed]/[0.03] to-transparent" aria-hidden />
         <div className="relative mx-auto max-w-4xl px-6 text-center">
           <motion.div
             initial={reduce ? undefined : { opacity: 0, y: 20 }}
@@ -793,12 +800,16 @@ export default function Home() {
               teams that value architecture and incremental delivery.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <Link href="/contact" className="btn-cta-white inline-flex h-12 items-center px-8 text-sm">
-                Contact Me
-              </Link>
-              <Link href="/resume" className="btn-cta-outline inline-flex h-12 items-center px-8 text-sm">
-                View Résumé
-              </Link>
+              <MagneticButton>
+                <Link href="/contact" className="btn-cta-white inline-flex h-12 items-center px-8 text-sm">
+                  Contact Me
+                </Link>
+              </MagneticButton>
+              <MagneticButton burst={false}>
+                <Link href="/resume" className="btn-cta-outline inline-flex h-12 items-center px-8 text-sm">
+                  View Résumé
+                </Link>
+              </MagneticButton>
             </div>
           </motion.div>
         </div>
