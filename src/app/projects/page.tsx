@@ -5,6 +5,7 @@ import { useState } from "react";
 import PageHeader from "@/components/PageHeader";
 import PageShell from "@/components/editorial/PageShell";
 import TiltCard from "@/components/TiltCard";
+import ProjectThumbnail from "@/components/ProjectThumbnail";
 
 const projects = [
   {
@@ -182,7 +183,11 @@ export default function Projects() {
       <ul className="mt-12 grid gap-5 md:grid-cols-2">
         {filteredProjects.map((project) => (
           <TiltCard key={project.id} className="project-card h-full">
-            <li className="surface-card flex h-full flex-col p-7">
+            <li className="surface-card flex h-full flex-col overflow-hidden">
+              <div className="relative aspect-[16/10] overflow-hidden bg-[#1A1A1A]">
+                <ProjectThumbnail title={project.title} category={project.category} />
+              </div>
+              <div className="flex h-full flex-col p-7">
               <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#a78bfa]">
                 {project.category}
               </span>
@@ -221,6 +226,7 @@ export default function Projects() {
                 Discuss →
               </Link>
             </div>
+          </div>
           </li>
         </TiltCard>
       ))}

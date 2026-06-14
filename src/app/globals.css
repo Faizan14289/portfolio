@@ -279,6 +279,35 @@ body {
   }
 }
 
+/* Editorial frame navigation links */
+.frame-link-ink {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: rgba(13, 13, 13, 0.85);
+  transition: color 0.25s ease;
+}
+
+.frame-link-ink:hover {
+  color: #0d0d0d;
+}
+
+.frame-link-frost {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: rgba(250, 250, 249, 0.65);
+  transition: color 0.25s ease;
+}
+
+.frame-link-frost:hover {
+  color: #c9a84c;
+}
+
 /* Hide default cursor when custom cursor is active (desktop only) */
 @media (hover: hover) and (pointer: fine) {
   body:has(.custom-cursor-active) {

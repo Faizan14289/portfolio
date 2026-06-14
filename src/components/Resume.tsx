@@ -62,13 +62,16 @@ export default function Resume() {
       </div>
 
       <div className="mt-8 flex flex-wrap gap-8 font-mono text-[10px] uppercase tracking-[0.16em]">
-        <a href="https://github.com/faizan14289" target="_blank" rel="noopener noreferrer" className="text-[#9A8B70] hover:text-[#C9A84C]">
+        <a href={site.github} target="_blank" rel="noopener noreferrer" className="text-[#9A8B70] hover:text-[#C9A84C]">
           GitHub
         </a>
-        <a href="https://www.linkedin.com/in/faizan-ali-b0b167150" target="_blank" rel="noopener noreferrer" className="text-[#9A8B70] hover:text-[#C9A84C]">
+        <a href={site.linkedin} target="_blank" rel="noopener noreferrer" className="text-[#9A8B70] hover:text-[#C9A84C]">
           LinkedIn
         </a>
-        <a href="mailto:faizali2152@gmail.com" className="text-[#9A8B70] hover:text-[#C9A84C]">
+        <a href={site.stackoverflow} target="_blank" rel="noopener noreferrer" className="text-[#9A8B70] hover:text-[#C9A84C]">
+          Stack Overflow
+        </a>
+        <a href={`mailto:${site.email}`} className="text-[#9A8B70] hover:text-[#C9A84C]">
           Email
         </a>
       </div>
@@ -92,7 +95,11 @@ export default function Resume() {
             </li>
             <li>
               <span className="font-medium text-[#FAFAF9]">Focus · </span>
-              LLM orchestration, voice AI, RAG, Vue 3/TypeScript, Laravel Octane
+              LLM orchestration, voice AI, RAG, MCP, Vue 3/TypeScript, Laravel Octane
+            </li>
+            <li>
+              <span className="font-medium text-[#FAFAF9]">Location · </span>
+              Remote — GMT+5 (Pakistan)
             </li>
           </ul>
         </section>

@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
+import HeroVisual from "@/components/HeroVisual";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 
@@ -26,30 +26,23 @@ export default function HomeEditorialHero() {
   return (
     <section className="relative min-h-[100dvh] overflow-hidden bg-[#1A1A1A]" aria-label="Introduction">
       <div className="grid min-h-[100dvh] grid-cols-1 lg:grid-cols-2">
-        {/* —— Light column: portrait + ink-colored frame links —— */}
-        <div className="relative min-h-[44vh] bg-[#f2f1ee] pt-16 lg:min-h-[100dvh] lg:pt-0">
+        {/* —— Left column: generative AI-system visual + ink-colored frame links —— */}
+        <div className="relative min-h-[44vh] bg-[#0f0f0f] pt-16 lg:min-h-[100dvh] lg:pt-0">
           <motion.div
             className="absolute inset-0"
-            initial={reduce ? undefined : { opacity: 0.92 }}
+            initial={reduce ? undefined : { opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           >
-            <Image
-              src="/hero-portrait.png"
-              alt="Faizan Ali"
-              fill
-              priority
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover object-[center_18%] grayscale contrast-[1.02]"
-            />
+            <HeroVisual />
           </motion.div>
-          {/* Soft edge into dark column — no flat wash over the face */}
+          {/* Soft edge into dark column */}
           <div
-            className="pointer-events-none absolute inset-y-0 right-0 z-[1] w-24 bg-gradient-to-l from-[#f2f1ee] via-[#f2f1ee]/40 to-transparent lg:w-32"
+            className="pointer-events-none absolute inset-y-0 right-0 z-[1] w-24 bg-gradient-to-l from-[#1A1A1A] via-[#1A1A1A]/60 to-transparent lg:w-32"
             aria-hidden
           />
           <div
-            className="pointer-events-none absolute inset-y-0 right-0 z-[1] hidden w-px bg-black/[0.06] lg:block"
+            className="pointer-events-none absolute inset-y-0 right-0 z-[1] hidden w-px bg-[#FAFAF9]/[0.06] lg:block"
             aria-hidden
           />
 
@@ -59,13 +52,13 @@ export default function HomeEditorialHero() {
           >
             <Link
               href="/"
-              className="frame-link-ink pointer-events-auto absolute left-8 top-8 text-xs tracking-[0.18em]"
+              className="frame-link-frost pointer-events-auto absolute left-8 top-8 text-xs tracking-[0.18em]"
             >
               FA
             </Link>
             <Link
               href={FRAME.about.href}
-              className="frame-link-ink pointer-events-auto absolute left-8 top-[4.5rem]"
+              className="frame-link-frost pointer-events-auto absolute left-8 top-[4.5rem]"
             >
               {FRAME.about.label}
             </Link>
@@ -73,13 +66,13 @@ export default function HomeEditorialHero() {
               className="pointer-events-auto absolute left-7 top-1/2 z-30 -translate-y-1/2"
               style={{ writingMode: "vertical-rl" }}
             >
-              <Link href={FRAME.portfolio.href} className="frame-link-ink py-1">
+              <Link href={FRAME.portfolio.href} className="frame-link-frost py-1">
                 {FRAME.portfolio.label}
               </Link>
             </div>
             <Link
               href={FRAME.expertise.href}
-              className="frame-link-ink pointer-events-auto absolute bottom-10 left-8"
+              className="frame-link-frost pointer-events-auto absolute bottom-10 left-8"
             >
               {FRAME.expertise.label}
             </Link>
@@ -109,11 +102,14 @@ export default function HomeEditorialHero() {
             aria-label="Frame dark"
           >
             <div
-              className="pointer-events-auto absolute right-8 top-1/2 -translate-y-1/2"
+              className="pointer-events-auto absolute right-8 top-1/2 flex -translate-y-1/2 flex-col items-center gap-6"
               style={{ writingMode: "vertical-rl" }}
             >
               <Link href={FRAME.contact.href} className="frame-link-frost py-2">
                 {FRAME.contact.label}
+              </Link>
+              <Link href="/resume" className="frame-link-frost py-2">
+                Résumé
               </Link>
             </div>
           </nav>
@@ -151,8 +147,8 @@ export default function HomeEditorialHero() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.28, duration: 0.45 }}
               >
-                Laravel, TypeScript, and production SaaS—APIs, caching, and systems that stay
-                understandable as they scale.
+                Laravel, TypeScript, and production AI systems—multi-LLM backends, real-time voice
+                agents, RAG pipelines, and SaaS that scales.
               </motion.p>
               <motion.div
                 className="mt-10 flex flex-wrap gap-4"

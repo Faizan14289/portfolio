@@ -2,14 +2,14 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useReducedMotion, useInView, AnimatePresence } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
 import { services } from "@/data/services";
 import { testimonials } from "@/data/testimonials";
 import { site } from "@/lib/site";
-import Typewriter from "@/components/Typewriter";
-import HeroOrb from "@/components/HeroOrb";
 import AnimatedCounter from "@/components/AnimatedCounter";
+import HomeEditorialHero from "@/components/HomeEditorialHero";
+import ProjectThumbnail from "@/components/ProjectThumbnail";
 import ProcessSteps from "@/components/ProcessSteps";
 import MagneticButton from "@/components/MagneticButton";
 import TiltCard from "@/components/TiltCard";
@@ -42,7 +42,6 @@ interface ProjectItem {
   category: string;
   description: string;
   href: string;
-  color: string;
 }
 
 function ProjectCard({ project, index }: { project: ProjectItem; index: number }) {
@@ -57,14 +56,8 @@ function ProjectCard({ project, index }: { project: ProjectItem; index: number }
         className="group h-full surface-card overflow-hidden"
       >
         <div className="relative aspect-[16/10] overflow-hidden bg-[#1A1A1A]">
-          <div className={`absolute inset-0 bg-gradient-to-br ${project.color}`} />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center">
-              <span className="font-hero text-5xl text-[#FAFAF9]/[0.08]">{project.title[0]}</span>
-            </div>
-          </div>
-          <div className="absolute bottom-3 left-1/2 h-1 w-16 -translate-x-1/2 rounded-full bg-[#FAFAF9]/[0.06]" />
-          <div className="absolute inset-0 flex items-center justify-center bg-[#7c3aed]/80 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
+          <ProjectThumbnail title={project.title} category={project.category} />
+          <div className="absolute inset-0 flex items-center justify-center bg-[#0D0D0D]/60 opacity-0 backdrop-blur-[2px] transition-opacity duration-300 group-hover:opacity-100">
             <a
               href={project.href}
               target="_blank"
@@ -217,89 +210,9 @@ export default function Home() {
   return (
     <>
       {/* ═══════════════════════════════════════════
-          HERO
+          EDITORIAL HERO
       ═══════════════════════════════════════════ */}
-      <section className="relative overflow-hidden bg-[#0D0D0D] py-20 md:py-28 lg:py-32">
-        <div className="pointer-events-none absolute right-0 top-1/2 h-[600px] w-[600px] -translate-y-1/2 translate-x-1/4 rounded-full bg-[#7c3aed]/[0.04] blur-[120px]" aria-hidden />
-
-        <div className="relative mx-auto max-w-7xl px-6">
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-            <div>
-              <motion.span
-                initial={reduce ? undefined : { opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0, ease: [0.22, 1, 0.36, 1] }}
-                className="eyebrow inline-block"
-              >
-                Senior Full Stack AI Developer
-              </motion.span>
-              <motion.h1
-                initial={reduce ? undefined : { opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-                className="font-hero mt-5 min-h-[1.2em] text-[clamp(2.5rem,6vw,4.5rem)] leading-[1.05] tracking-tight text-[#FAFAF9]"
-              >
-                <Typewriter cursorColor="#7c3aed" />
-              </motion.h1>
-              <motion.p
-                initial={reduce ? undefined : { opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-                className="mt-6 max-w-lg text-base leading-relaxed text-[#B8A88A] md:text-lg"
-              >
-                Multi-LLM backends, real-time voice AI, RAG pipelines, and production SaaS —
-                from concept to deployment.
-              </motion.p>
-              <motion.div
-                initial={reduce ? undefined : { opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                className="mt-8 flex flex-wrap gap-4"
-              >
-                <MagneticButton>
-                  <Link href="/projects" className="btn-cta inline-flex h-12 items-center px-7 text-sm">
-                    View My Work
-                  </Link>
-                </MagneticButton>
-                <MagneticButton>
-                  <Link href="/contact" className="btn-cta-outline inline-flex h-12 items-center px-7 text-sm">
-                    Get In Touch
-                  </Link>
-                </MagneticButton>
-              </motion.div>
-              <motion.div
-                initial={reduce ? undefined : { opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                className="mt-12 flex gap-8 border-t border-[#FAFAF9]/[0.06] pt-8"
-              >
-                {[
-                  { num: 5, suffix: "+", label: "Years" },
-                  { num: 6, suffix: "+", label: "LLM Providers" },
-                  { num: 100, suffix: "%", label: "Remote" },
-                ].map((s) => (
-                  <div key={s.label}>
-                    <p className="font-hero text-2xl text-[#FAFAF9]">
-                      <AnimatedCounter target={s.num} suffix={s.suffix} duration={1800} />
-                    </p>
-                    <p className="mt-1 text-xs text-[#9A8B70]">{s.label}</p>
-                  </div>
-                ))}
-              </motion.div>
-            </div>
-
-            <motion.div
-              initial={reduce ? undefined : { opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="relative flex justify-center lg:justify-end"
-              data-cursor-grab
-            >
-              <HeroOrb />
-            </motion.div>
-          </div>
-        </div>
-      </section>
+      <HomeEditorialHero />
 
       {/* ═══════════════════════════════════════════
           TRUST BAR
@@ -426,7 +339,7 @@ export default function Home() {
               <p className="section-subtitle mt-5">
                 I studied BS Computer Science at UET Lahore and have spent five years shipping
                 production systems across SaaS, e-commerce, and AI platforms. Currently building
-                Botsify's entire agentic AI layer — multi-LLM engines, real-time voice agents,
+                Botsify&apos;s entire agentic AI layer — multi-LLM engines, real-time voice agents,
                 RAG pipelines, and a Vue 3 AI management dashboard.
               </p>
               <motion.ul
@@ -526,21 +439,18 @@ export default function Home() {
                 category: "AI · Agentic Platform",
                 description: "Multi-LLM agentic AI layer with real-time voice calls, RAG pipelines, MCP integrations, and a Vue 3 management dashboard.",
                 href: "https://botsify.com/",
-                color: "from-[#7c3aed]/25 to-[#4c1d95]/10",
               },
               {
                 title: "StaffViz",
                 category: "SaaS · Workforce Intelligence",
                 description: "End-to-end platform for recruitment, scheduling, tasks, and analytics with realtime updates.",
                 href: "https://www.staffviz.com/",
-                color: "from-[#a78bfa]/20 to-[#7c3aed]/10",
               },
               {
                 title: "MyTailorStore",
                 category: "E‑commerce · Custom Tailoring",
                 description: "High-conversion bespoke fashion storefront with configurable garments and fabric catalog.",
                 href: "https://www.mytailorstore.com/",
-                color: "from-[#c084fc]/20 to-[#7c3aed]/10",
               },
             ].map((project, i) => (
               <ProjectCard key={project.title} project={project} index={i} />
@@ -796,7 +706,7 @@ export default function Home() {
               Do You Have a Project?
             </h2>
             <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-[#B8A88A]">
-              Whether it is a new product, a rebuild, or a performance push — I work best with
+              Whether it&apos;s a new product, a rebuild, or a performance push — I work best with
               teams that value architecture and incremental delivery.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">

@@ -10,9 +10,9 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <Navigation />
-      <main id="main-content" className="relative z-10 flex-1 pt-16">
-        {!isHome ? <OpenToWorkBanner /> : null}
+      {!isHome ? <Navigation /> : null}
+      <main id="main-content" className={`relative z-10 flex-1 ${isHome ? "pt-14 lg:pt-0" : "pt-16"}`}>
+        <OpenToWorkBanner />
         {children}
       </main>
     </>

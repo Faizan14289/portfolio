@@ -10,6 +10,7 @@ export const site = {
   email: "faizali2152@gmail.com",
   github: "https://github.com/faizan14289",
   linkedin: "https://www.linkedin.com/in/faizan-ali-b0b167150",
+  stackoverflow: "https://stackoverflow.com/users/12567622/faizan-ali",
   /** Place the file at `public/faizan-ali-resume.pdf` (clean URL for recruiters). */
   resumePdfPath: "/faizan-ali-resume.pdf",
   resumePdfDownloadName: "Faizan-Ali-Senior-Full-Stack-AI-Developer-Resume.pdf",
@@ -17,7 +18,7 @@ export const site = {
     title: "Open to opportunities",
     summary:
       "Senior full-stack & AI-leaning roles · Remote or hybrid · GMT+5 — discuss relocation/visa case-by-case.",
-    ctaLabel: "Get in touch",
+    ctaLabel: "Hire me",
     ctaHref: "/contact",
   },
 } as const;
